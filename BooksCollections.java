@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class BooksCollections
 {
@@ -53,11 +56,18 @@ public class BooksCollections
 	{
 		try
 		{
+			File obj = new File("src/input.txt");
+			Scanner reader = new Scanner(obj);
 			
+			while(reader.hasNextLine())
+			{
+				String data = reader.nextLine();
+			}
+			reader.close();
 		}
 		catch(FileNotFoundException e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 }

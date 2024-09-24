@@ -49,8 +49,15 @@ public class BooksCollections
 	    return books.get(randomIndex);
 	}
 
-	public void appendCollection() {
-		// TODO Auto-generated method stub
-		
+	public void appendCollection() 
+	{
+		try
+		{
+			
+		}
+		catch(FileNotFoundException e)
+		{
+			
+		}
 	}
 }

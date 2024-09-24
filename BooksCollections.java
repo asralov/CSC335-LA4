@@ -52,6 +52,7 @@ public class BooksCollections
 	    return books.get(randomIndex);
 	}
 
+	// added a comment
 	public void appendCollection() 
 	{
 		try

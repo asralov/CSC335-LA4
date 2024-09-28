@@ -9,21 +9,36 @@ public class Librarian
 	}
 	
 	
-	public ArrayList<Book> search(String searchBy, String desc)
+//	public ArrayList<Book> search(String searchBy, String desc)
+//	{
+//		if (searchBy.equals("t"))
+//		{
+//			return this.books.searchByTitle(desc);
+//		}
+//		if (searchBy.equals("a"))
+//		{
+//			return this.books.searchByAuthor(desc);
+//		}
+//		else
+//		{
+//			return this.books.searchByRating(desc);
+//		}
+//	}
+	
+	public ArrayList<Book> searchByAuthor(String authorName)
 	{
-		if (searchBy.equals("title"))
-		{
-			return this.books.searchByTitle(desc);
-		}
-		if (searchBy.equals("author"))
-		{
-			return this.books.searchByAuthor(desc);
-		}
-		else
-		{
-			return this.books.searchByRating(desc);
-		}
+		return this.books.searchByAuthor(authorName);
 	}
+	
+	public ArrayList<Book> searchByTitle(String titleName)
+	{
+		return this.books.searchByAuthor(titleName);
+	}
+	public ArrayList<Book> searchByRating(int rating)
+	{
+		return this.books.searchByRating(rating);
+	}
+	
 	
 	public void addBook(String title, String author, int rating)
 	{
@@ -40,7 +55,7 @@ public class Librarian
 	}
 	
 	// need to implement
-	public void rate()
+	public void rate(String bookDesc, String status)
 	{
 	
 	}
@@ -57,8 +72,8 @@ public class Librarian
 	}
 	
 	
-	public void addBooks()
+	public void addBooks(String fileName)
 	{
-		this.books.appendCollection(); // after raeding a file, enriching a book collection
+		this.books.appendCollection(fileName); // after raeding a file, enriching a book collection
 	}
 }

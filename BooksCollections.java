@@ -24,9 +24,8 @@ public class BooksCollections
 		ArrayList<Book> fitDesc = new ArrayList<>();
 		return fitDesc;
 	}
-	public ArrayList<Book> searchByRating(String ratingDesc)
+	public ArrayList<Book> searchByRating(int rating)
 	{
-		int rating = Integer.parseInt(ratingDesc);  // translating string to be int
 		ArrayList<Book> fitDesc = new ArrayList<>();
 		return fitDesc;
 	}
@@ -53,11 +52,11 @@ public class BooksCollections
 	}
 
 	// added a comment
-	public void appendCollection() 
+	public void appendCollection(String fileName) 
 	{
 		try
 		{
-			File obj = new File("src/input.txt");
+			File obj = new File("src/" + fileName);
 			Scanner reader = new Scanner(obj);
 			
 			while(reader.hasNextLine())

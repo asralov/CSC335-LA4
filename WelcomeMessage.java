@@ -4,6 +4,7 @@ public class WelcomeMessage
 	private String message;
 	public WelcomeMessage()
 	{
+		// added a comment
 		this.message = generateWelcomeMessage();
 	}
 	

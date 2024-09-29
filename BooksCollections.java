@@ -16,17 +16,32 @@ public class BooksCollections
 	public ArrayList<Book> searchByAuthor(String authorDesc)
 	{
 		ArrayList<Book> fitDesc = new ArrayList<>();
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getAuthor().equals(authorDesc)) {
+				fitDesc.add(books.get(i));
+			}
+		} 
 		return fitDesc;
 	}
 	
 	public ArrayList<Book> searchByTitle(String titleDesc)
 	{
 		ArrayList<Book> fitDesc = new ArrayList<>();
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getTitle().equals(titleDesc)) {
+				fitDesc.add(books.get(i));
+			}
+		} 
 		return fitDesc;
 	}
 	public ArrayList<Book> searchByRating(int rating)
 	{
 		ArrayList<Book> fitDesc = new ArrayList<>();
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getRating() == rating) {
+				fitDesc.add(books.get(i));
+			}
+		} 
 		return fitDesc;
 	}
 	
@@ -56,12 +71,20 @@ public class BooksCollections
 	{
 		try
 		{
-			File obj = new File("src/" + fileName);
+			// File obj = new File("src/" + fileName);
+			File obj = new File(fileName);
 			Scanner reader = new Scanner(obj);
 			
 			while(reader.hasNextLine())
 			{
 				String data = reader.nextLine();
+				// split each line by ";" and add a Book object to 
+				// BookCollections
+				String[] dataSplit = data.split(";", 2);
+				String bookName = dataSplit[0];
+				String authorName = dataSplit[1];
+				// System.out.println(bookName + " " + authorName);
+				books.add(new Book(bookName, authorName));
 			}
 			reader.close();
 		}

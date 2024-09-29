@@ -32,7 +32,7 @@ public class Librarian
 	
 	public ArrayList<Book> searchByTitle(String titleName)
 	{
-		return this.books.searchByAuthor(titleName);
+		return this.books.searchByTitle(titleName);
 	}
 	public ArrayList<Book> searchByRating(int rating)
 	{

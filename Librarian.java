@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Librarian 
 {
-	public BooksCollections books;
+	private BooksCollections books;
 	public Librarian(BooksCollections bookCollections)
 	{
 		this.books = bookCollections;

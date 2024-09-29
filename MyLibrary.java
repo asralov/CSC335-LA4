@@ -131,7 +131,8 @@ public class MyLibrary
     			
     			librarian.addBook(titleDesc, authorName, rating);
     			System.out.println("Book added succesfully!");
-    			System.out.print(librarian.books);
+    			// for debugging purposes
+//    			System.out.print(librarian.books);
     		}
     		
     		

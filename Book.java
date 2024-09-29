@@ -15,7 +15,7 @@ public class Book
 	{
 		this.title = title;
 		this.author = author;
-		this.rating = rating;  
+		this.updateRating(rating); 
 		this.isRead = false;  // setting to be false since at first book need not to be read
 	}
 	
@@ -87,6 +87,11 @@ public class Book
 	public boolean isRead()
 	{
 		return this.isRead; // return the status of the book whether it is read or not
+	}
+	
+	public String toString()
+	{
+	 	return this.title + " - " + this.author + " (" + this.rating + " stars)";
 	}
 	
 	

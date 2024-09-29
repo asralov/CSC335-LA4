@@ -125,8 +125,13 @@ public class MyLibrary
     			System.out.print("Please enter a rating for the book: ");
     			int rating = sc.nextInt();
     			
+    			
+    			// To solve the issue with else block working
+    			sc.nextLine(); // Consume the leftover newline
+    			
     			librarian.addBook(titleDesc, authorName, rating);
     			System.out.println("Book added succesfully!");
+    			System.out.print(librarian.books);
     		}
     		
     		
@@ -167,10 +172,11 @@ public class MyLibrary
     			librarian.addBooks(fileName);
     			System.out.println("Books added succesfully!");	
     		}
-    		
+    
     		// else case when user entered some invalid or miss spelled command
     		// so we show that no command was executed and ask them to enter a valid
     		// command
+    		
     		else
     		{
     			System.out.print("Oopsie, it seems you entered an invalid or incorrectly spelled\ncommand,");

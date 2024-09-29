@@ -70,4 +70,13 @@ public class BooksCollections
 			e.printStackTrace();
 		}
 	}
+	
+    public String toString() {
+        String temp = "";
+        temp += "Books in the collection:\n";
+        for (Book book : books) {
+            temp += book.toString() + "\n";
+        }
+        return temp;
+    }
 }

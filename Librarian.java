@@ -49,7 +49,7 @@ public class Librarian
 	
 	
 	// need to be implemented
-	public void setToRad()
+	public void setToRead()
 	{
 		
 	}
@@ -58,6 +58,12 @@ public class Librarian
 	public void rate(String bookDesc, String status)
 	{
 	
+	}
+
+	// rates a book by its title
+	public void rate(Book book)
+	{
+		book.read();
 	}
 	
 	// need to be implemented

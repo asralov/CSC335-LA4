@@ -123,6 +123,8 @@ public class MyLibrary
     		// so we show that no command was executed and ask them to enter a valid
     		// command
     		
+			// gets called when searching for a book by rating or when rating
+			// needs to account for those inputs
     		else
     		{
     			System.out.print("Oopsie, it seems you entered an invalid or incorrectly spelled\ncommand,");

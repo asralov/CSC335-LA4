@@ -83,7 +83,7 @@ public class MyLibrary
     		// setToRead command 
     		else if (userInput.equals("settoread"))
     		{
-				setToRead();
+				setToRead();    			
     		}
     		
     		// rate command

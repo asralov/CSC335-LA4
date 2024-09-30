@@ -47,18 +47,6 @@ public class Librarian
 		this.books.add(newBook);
 	}
 	
-	
-	// need to be implemented
-	public void setToRead()
-	{
-		
-	}
-	
-	// need to implement
-	public void rate(String bookDesc, String status)
-	{
-	
-	}
 
 	// updates the rating of a book
 	public void rate(Book book, int rating)

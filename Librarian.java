@@ -47,17 +47,17 @@ public class Librarian
 		this.books.add(newBook);
 	}
 	
-	
-	// need to be implemented
-	public void setToRad()
+
+	// updates the rating of a book
+	public void rate(Book book, int rating)
 	{
-		
+		book.updateRating(rating);
 	}
-	
-	// need to implement
-	public void rate(String bookDesc, String status)
+
+	// flags a book as read
+	public void setToRead(Book book)
 	{
-	
+		book.read();
 	}
 	
 	// need to be implemented

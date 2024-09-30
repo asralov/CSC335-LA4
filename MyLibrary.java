@@ -140,6 +140,49 @@ public class MyLibrary
     		else if (userInput.equals("settoread"))
     		{
     			// TODO: NEED TO WORK ON IT
+    			System.out.println("Please enter needed information about the book");
+    			System.out.print("Author's Name: ");
+    			String author = sc.nextLine();
+    			
+    			System.out.print("Title: ");
+    			String title = sc.nextLine();
+    			
+    			// getting the search by author
+    			ArrayList<Book> res = librarian.searchByAuthor(author);
+    			// if we could not find anything so user gave a wrong information
+    			if (res.size() < 1)
+    			{
+    				System.out.println("Oopsie, something went wrong, no such a book");
+    			}
+    			
+    			// if the size is not 1, then we have several books with the same author
+    			// so we will go over and look for the book with title
+    			else if (res.size() > 1)
+    			{
+    				boolean found = false;
+    				for (Book b:res)
+    				{
+    					if (b.getTitle().equals(title))
+    					{
+    						b.read();
+    						System.out.println("Succesfully updated status");
+    						found = true;
+    						break; // break the loop
+    					}
+    				}
+    				if (!found)
+    				{
+        				System.out.println("Oopsie, something went wrong, no such a book with that title");
+    				}	
+    			}
+    			// else case when we know there is only one result
+    			else
+    			{
+    				res.get(0).read();
+    				System.out.println("Succesfully updated status");
+    			}
+    			
+    			
     		}
     		
     		// rate command

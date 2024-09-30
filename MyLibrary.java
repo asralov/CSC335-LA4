@@ -76,38 +76,21 @@ public class MyLibrary
     			librarian.addBook(titleDesc, authorName, rating);
     			System.out.println("Book added succesfully!");
     			// for debugging purposes
-//    			System.out.print(librarian.books);
+				//System.out.print(librarian.books);
     		}
     		
     		
     		// setToRead command 
     		else if (userInput.equals("settoread"))
     		{
-				// prompts the user to enter the book to flag as read and calls
-				// searchBook() function
-    			System.out.println("Please enter the book that you have read: \n");
-				ArrayList<Book> booksFound = searchBook();
-				// if none foudn return
-				if (booksFound.size() == 0) return;
-
-				int selectedBookIdx;
-				// If there are multiple books found
-				if (booksFound.size() > 1) {
-					System.out.println("Please specify the book from the list: ");
-					selectedBookIdx = sc.nextInt();
-				} else {
-					selectedBookIdx = 0;
-				}
-				librarian.rate(booksFound.get(selectedBookIdx));
-
-
-				System.out.println("Book successfully set to read!");
+				setToRead();
     		}
     		
     		// rate command
     		else if (userInput.equals("rate"))
     		{
     			// TODO need to work on searching for books
+				rateBook();
     		}
     		
     		
@@ -234,7 +217,57 @@ public class MyLibrary
 				System.out.println("Oopsie, we do not have that book in our storage!");
 			}	
     	}
-		return null;
+		// return empty ArrayList
+		return new ArrayList<Book>();
+	}
+
+	private static void setToRead() {
+		// prompts the user to enter the book to flag as read and calls
+		// searchBook() function
+		System.out.println("Please enter the book that you have read: \n");
+		ArrayList<Book> booksFound = searchBook();
+		// if none foudn return
+		if (booksFound.size() == 0) return;
+
+		int selectedBookIdx;
+		// If there are multiple books found
+		if (booksFound.size() > 1) {
+			System.out.println("Please specify the book from the list: ");
+			selectedBookIdx = sc.nextInt();
+		} else {
+			selectedBookIdx = 0;
+		}
+		librarian.setToRead(booksFound.get(selectedBookIdx));
+
+
+		System.out.println("Book successfully set to read!");
+	}
+
+	private static void rateBook() {
+
+		System.out.println("Please enter the book to rate: \n");
+
+		// THE FOLLOWING SECTION IS A COPY FROM setToRead()
+
+		ArrayList<Book> booksFound = searchBook();
+		// if none foudn return
+		if (booksFound.size() == 0) return;
+		int selectedBookIdx;
+		// If there are multiple books found
+		if (booksFound.size() > 1) {
+			System.out.println("Please specify the book from the list: ");
+			selectedBookIdx = sc.nextInt();
+		} else {
+			selectedBookIdx = 0;
+		}
+
+		System.out.println("Please enter a rating from 1 to 5: ");
+		int rating  = sc.nextInt();
+
+
+		librarian.rate(booksFound.get(selectedBookIdx), rating);
+
+		System.out.println("Rating updated!");
 	}
 
 

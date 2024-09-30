@@ -60,8 +60,14 @@ public class Librarian
 	
 	}
 
-	// rates a book by its title
-	public void rate(Book book)
+	// updates the rating of a book
+	public void rate(Book book, int rating)
+	{
+		book.updateRating(rating);
+	}
+
+	// flags a book as read
+	public void setToRead(Book book)
 	{
 		book.read();
 	}

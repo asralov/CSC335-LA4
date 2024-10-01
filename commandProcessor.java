@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CommandProcessor {
@@ -172,6 +174,16 @@ public class CommandProcessor {
 							"\n\"R\" - get book that have been read;" +
 							"\n\"U\" - get book that have not been read;");
 		String option = sc.nextLine().toLowerCase();
+
+		Map<String, Runnable> cmdList = new HashMap<>();
+
+		cmdList.put("A", () -> booksCol.getBooksByAuthor());
+		cmdList.put("T", () -> booksCol.getBooksByTitle());
+		cmdList.put("R", () -> booksCol.getBooksByRead());
+		cmdList.put("U", () -> booksCol.getBooksByUnread());
+
+		cmdList.get(option).run();
+
 	}
 
     public void suggestRead() {

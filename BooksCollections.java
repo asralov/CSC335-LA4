@@ -93,6 +93,21 @@ public class BooksCollections
 			e.printStackTrace();
 		}
 	}
+
+	public ArrayList<Book> getBooksByAuthor() {
+		return null;
+
+	}
+	public ArrayList<Book> getBooksByTitle() {
+		return null;
+		
+	}
+	public ArrayList<Book> getBooksByRead() {
+		return null;
+	}
+	public ArrayList<Book> getBooksByUnread() {
+		return null;
+	}
 	
     public String toString() {
         String temp = "";

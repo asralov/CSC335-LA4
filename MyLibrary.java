@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class MyLibrary
 {
-	private static Librarian librarian;
-
 	private static Scanner sc;
 	
     public static void main(String[] args)
@@ -19,7 +17,7 @@ public class MyLibrary
 
     	
     	// craeting an instance of librarian who will control books
-    	librarian = new Librarian(new BooksCollections());
+    	// librarian = new Librarian(new BooksCollections());
     	
     	// getting mapped our librarian's tasks to map to his duties with description
     	Map<String, String> duties = new HashMap<>();
@@ -32,7 +30,7 @@ public class MyLibrary
     	duties.put("addBooks", "reads a file in a specific format, so those books are\nadded to the book collection");
 
 		sc = new Scanner(System.in);
-		CommandProcessor commandProcessor = new CommandProcessor(sc, librarian);
+		CommandProcessor commandProcessor = new CommandProcessor(sc, new BooksCollections());
 
 		Map<String, Runnable> cmdList = new HashMap<>();
 
@@ -43,7 +41,6 @@ public class MyLibrary
 		cmdList.put("getbooks", () -> {commandProcessor.getBooks();});
 		cmdList.put("suggestread", () -> {commandProcessor.suggestRead();});
 		cmdList.put("addbooks", () -> {commandProcessor.addBooks();});
-
 
     	
     	String userInput = sc.nextLine().toLowerCase();

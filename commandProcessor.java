@@ -4,13 +4,12 @@ import java.util.Scanner;
 public class CommandProcessor {
 
     private Scanner sc;
-    private Librarian librarian;
+    private BooksCollections booksCol;
 
-    public CommandProcessor(Scanner scanner, Librarian libr) {
+    public CommandProcessor(Scanner scanner, BooksCollections booksCollection) {
         this.sc = scanner;
-        this.librarian = libr;
+        this.booksCol = booksCollection;
     }
-
 
     public ArrayList<Book> searchBook() {
 		System.out.println("Choose an option for search command and enter one of the letters:");
@@ -22,19 +21,19 @@ public class CommandProcessor {
 			String authorName = sc.nextLine();
 			
 			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByAuthor(authorName);
+			ArrayList<Book> books = booksCol.searchByAuthor(authorName);
 			if (books.size() > 0)
 			{
 				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
 				System.out.println("We found for you (by Author): ");
+				int idx = 0;
 				for (Book book:books)
 				{
-					System.out.println(book);
-					booksToPrint.add(book);
+					System.out.println("id: " + idx + " - " +  book);
+					idx++;
 				}
 
-				return booksToPrint;
+				return books;
 				
 			}
 			else
@@ -47,18 +46,19 @@ public class CommandProcessor {
 			System.out.println("Please enter the title of the book you are looking for: ");
 			String titleName = sc.nextLine();
 			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByTitle(titleName);
+			ArrayList<Book> books = booksCol.searchByTitle(titleName);
 			if (books.size() > 0)
 			{
 				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
 				System.out.println("We found for you (by Title): ");
+				int idx = 0;
 				for (Book book:books)
 				{
-					System.out.println(book);
-					booksToPrint.add(book);
+					System.out.println("id: " + idx + " - " +  book);
+					idx++;
 				}
-				return booksToPrint;
+
+				return books;
 			}
 			else
 			{
@@ -71,18 +71,19 @@ public class CommandProcessor {
 			int rating = sc.nextInt();
             sc.nextLine();
 			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByRating(rating);
+			ArrayList<Book> books = booksCol.searchByRating(rating);
 			if (books.size() > 0)
 			{
 				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
 				System.out.println("We found for you (by Rating): ");
+				int idx = 0;
 				for (Book book:books)
 				{
-					System.out.println(book);
-					booksToPrint.add(book);
+					System.out.println("id: " + idx + " - " +  book);
+					idx++;
 				}
-				return booksToPrint;
+
+				return books;
 			}
 			else
 			{
@@ -109,7 +110,7 @@ public class CommandProcessor {
 		} else {
 			selectedBookIdx = 0;
 		}
-		librarian.setToRead(booksFound.get(selectedBookIdx));
+		booksFound.get(selectedBookIdx).read();
 
 
 		System.out.println("Book successfully set to read!");
@@ -127,7 +128,7 @@ public class CommandProcessor {
 		int selectedBookIdx;
 		// If there are multiple books found
 		if (booksFound.size() > 1) {
-			System.out.println("Please specify the book from the list: ");
+			System.out.println("Please enter the ID of the book: ");
 			selectedBookIdx = sc.nextInt();
 		} else {
 			selectedBookIdx = 0;
@@ -137,7 +138,7 @@ public class CommandProcessor {
 		int rating  = sc.nextInt();
         sc.nextLine();
 
-		librarian.rate(booksFound.get(selectedBookIdx), rating);
+		booksFound.get(selectedBookIdx).updateRating(rating);
 
 		System.out.println("Rating updated!");
 	}
@@ -155,8 +156,10 @@ public class CommandProcessor {
         
         // To solve the issue with else block working
         sc.nextLine(); // Consume the leftover newline
-        
-        librarian.addBook(titleDesc, authorName, rating);
+
+
+        Book newBook = new Book(titleDesc, authorName, rating);
+        booksCol.add(newBook);
         System.out.println("Book added succesfully!");
         // for debugging purposes
         //System.out.print(librarian.books);
@@ -172,7 +175,7 @@ public class CommandProcessor {
 	}
 
     public void suggestRead() {
-        System.out.println("We highly recommend: " + librarian.suggestRead());
+        System.out.println("We highly recommend: " + booksCol.getRandomBook());
     }
 
     public void addBooks() {
@@ -180,7 +183,7 @@ public class CommandProcessor {
         System.out.println("Enter a valid file name with .txt extension");
         System.out.println("(Note that a file should be located in the same directory)");
         String fileName = sc.nextLine();
-        librarian.addBooks(fileName);
+        booksCol.appendCollection(fileName);
         System.out.println("Books added succesfully!");	
     }
     

@@ -4,7 +4,7 @@
  * a book class to be a Book with title and author, 
  * the only thing we can change is rating
  */
-public class Book 
+public class Book
 {
 	private String title;
 	private String author;

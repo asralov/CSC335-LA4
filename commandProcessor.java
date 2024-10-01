@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class commandProcessor {
+public class CommandProcessor {
 
     private Scanner sc;
     private Librarian librarian;
 
-    public commandProcessor(Scanner scanner, Librarian libr) {
+    public CommandProcessor(Scanner scanner, Librarian libr) {
         this.sc = scanner;
         this.librarian = libr;
     }

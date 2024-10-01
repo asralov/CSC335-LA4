@@ -31,7 +31,21 @@ public class MyLibrary
     	duties.put("suggestRead", "gets a random book from the library and suggests\nit to the user");
     	duties.put("addBooks", "reads a file in a specific format, so those books are\nadded to the book collection");
 
-    	sc = new Scanner(System.in);
+		sc = new Scanner(System.in);
+		commandProcessor commandProcessor = new commandProcessor(sc, librarian);
+
+		Map<String, Runnable> cmdList = new HashMap<>();
+
+		cmdList.put("search", () -> {commandProcessor.searchBook();});
+		cmdList.put("addbook", () -> {commandProcessor.addBook();});
+		cmdList.put("settoread", () -> {commandProcessor.setToRead();});
+		cmdList.put("rate", () -> {commandProcessor.rateBook();});
+		cmdList.put("getbooks", () -> {commandProcessor.getBooks();});
+		cmdList.put("suggestread", () -> {commandProcessor.suggestRead();});
+		cmdList.put("addbooks", () -> {commandProcessor.addBooks();});
+
+
+    	
     	String userInput = sc.nextLine().toLowerCase();
     	while (!userInput.equals("stop"))
     	{
@@ -45,233 +59,25 @@ public class MyLibrary
     	            System.out.println("*****************************************************************");
     	        }
     		}
-    		
-    		// search case when we need to allow user to choose
-    		// by what property of the book should we search by
-    		//  it can rating, title, or author
-    		else if (userInput.equals("search"))
-    		{
-				// moved the section to a separate function
-    			searchBook();
-    		}
-    		
-    		
-    		// addBook command when we have to accepts three main characteristics of a new book
-    		// that should be added to our collection
-    		else if (userInput.equals("addbook"))
-    		{
-    			System.out.print("Please enter an author's name: ");
-    			String authorName = sc.nextLine();
-    			
-    			System.out.print("Please enter a title of the book: ");
-    			String titleDesc = sc.nextLine();
-    			
-    			System.out.print("Please enter a rating for the book: ");
-    			int rating = sc.nextInt();
-    			
-    			
-    			// To solve the issue with else block working
-    			sc.nextLine(); // Consume the leftover newline
-    			
-    			librarian.addBook(titleDesc, authorName, rating);
-    			System.out.println("Book added succesfully!");
-    			// for debugging purposes
-				//System.out.print(librarian.books);
-    		}
-    		
-    		
-    		// setToRead command 
-    		else if (userInput.equals("settoread"))
-    		{		
-				setToRead();    			
-    		}
-    		
-    		// rate command
-    		else if (userInput.equals("rate"))
-    		{
-    			// TODO need to work on searching for books
-				rateBook();
-    		}
-    		
-    		
-    		// getBooks command
-    		else if (userInput.equals("getbooks"))
-    		{
-    			// TODO nned to think of the way of sorting and giving books by title, author or rating
-    		}
-    		
-    		
-    		// suggestRead command
-    		else if (userInput.equals("suggestread"))
-    		{
-    			System.out.println("We highly recommend: " + librarian.suggestRead());
-    		}
-    		
-    		
-    		// addBooks command
-    		else if (userInput.equals("addbooks"))
-    		{
-    			// TODO need to think of the way of finding 
-    			System.out.println("Enter a valid file name with .txt extension");
-    			System.out.println("(Note that a file should be located in the same directory)");
-    			String fileName = sc.nextLine();
-    			librarian.addBooks(fileName);
-    			System.out.println("Books added succesfully!");	
-    		}
-    
     		// else case when user entered some invalid or miss spelled command
     		// so we show that no command was executed and ask them to enter a valid
     		// command
     		
 			// gets called when searching for a book by rating or when rating
 			// needs to account for those inputs
-    		else
+    		if (cmdList.get(userInput) == null)
     		{
     			System.out.print("Oopsie, it seems you entered an invalid or incorrectly spelled\ncommand,");
     			System.out.println(" please go over the list of commands and try again!");
-    		}
-    		
-    		
-    		// to read a next new command
-    		userInput = sc.nextLine().toLowerCase();
-    		
-    		
+    		} else {
+				cmdList.get(userInput).run();
+			}
+			// to read a next new command
+			userInput = sc.nextLine().toLowerCase();
     	}
     	
     	
     	sc.close();
     	
     }
-
-	private static ArrayList<Book> searchBook() {
-		System.out.println("Choose an option for search command and enter one of the letters:");
-		System.out.println("\"A\" - searching by Author;\n\"T\" - searching by Title;\n\"R\" - searching by Rating;");
-		String option = sc.nextLine().toLowerCase();
-		if (option.equals("a"))
-		{
-			System.out.print("Please enter an author's name for searching: ");
-			String authorName = sc.nextLine();
-			
-			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByAuthor(authorName);
-			if (books.size() > 0)
-			{
-				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
-				System.out.println("We found for you (by Author): ");
-				for (Book book:books)
-				{
-					System.out.println(book);
-					booksToPrint.add(book);
-				}
-
-				return booksToPrint;
-				
-			}
-			else
-			{
-				System.out.println("Oopsie, we do not have that book in our storage!");
-			}		
-		}
-		else if (option.equals("t"))
-		{
-			System.out.println("Please enter the title of the book you are looking for: ");
-			String titleName = sc.nextLine();
-			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByTitle(titleName);
-			if (books.size() > 0)
-			{
-				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
-				System.out.println("We found for you (by Title): ");
-				for (Book book:books)
-				{
-					System.out.println(book);
-					booksToPrint.add(book);
-				}
-				return booksToPrint;
-			}
-			else
-			{
-				System.out.println("Oopsie, we do not have that book in our storage!");
-			}	
-		}
-		else if (option.equals("r"))
-		{
-			System.out.println("Please enter the rating of the book you are looking for: ");
-			int rating = sc.nextInt();
-			// getting the list of found books
-			ArrayList<Book> books = librarian.searchByRating(rating);
-			if (books.size() > 0)
-			{
-				// createa an arrayList and append each element to it
-				ArrayList<Book> booksToPrint = new ArrayList<Book>();
-				System.out.println("We found for you (by Rating): ");
-				for (Book book:books)
-				{
-					System.out.println(book);
-					booksToPrint.add(book);
-				}
-				return booksToPrint;
-			}
-			else
-			{
-				System.out.println("Oopsie, we do not have that book in our storage!");
-			}	
-    	}
-		// return empty ArrayList
-		return new ArrayList<Book>();
-	}
-
-	private static void setToRead() {
-		// prompts the user to enter the book to flag as read and calls
-		// searchBook() function
-		System.out.println("Please enter the book that you have read: \n");
-		ArrayList<Book> booksFound = searchBook();
-		// if none foudn return
-		if (booksFound.size() == 0) return;
-
-		int selectedBookIdx;
-		// If there are multiple books found
-		if (booksFound.size() > 1) {
-			System.out.println("Please specify the book from the list: ");
-			selectedBookIdx = sc.nextInt();
-		} else {
-			selectedBookIdx = 0;
-		}
-		librarian.setToRead(booksFound.get(selectedBookIdx));
-
-
-		System.out.println("Book successfully set to read!");
-	}
-
-	private static void rateBook() {
-
-		System.out.println("Please enter the book to rate: \n");
-
-		// THE FOLLOWING SECTION IS A COPY FROM setToRead()
-
-		ArrayList<Book> booksFound = searchBook();
-		// if none foudn return
-		if (booksFound.size() == 0) return;
-		int selectedBookIdx;
-		// If there are multiple books found
-		if (booksFound.size() > 1) {
-			System.out.println("Please specify the book from the list: ");
-			selectedBookIdx = sc.nextInt();
-		} else {
-			selectedBookIdx = 0;
-		}
-
-		System.out.println("Please enter a rating from 1 to 5: ");
-		int rating  = sc.nextInt();
-
-
-		librarian.rate(booksFound.get(selectedBookIdx), rating);
-
-		System.out.println("Rating updated!");
-	}
-
-
-
 }

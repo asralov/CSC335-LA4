@@ -176,13 +176,14 @@ public class CommandProcessor {
 		String option = sc.nextLine().toLowerCase();
 
 		Map<String, Runnable> cmdList = new HashMap<>();
+		// static ArrayList<Book> booksToPrint;
 
-		cmdList.put("A", () -> booksCol.getBooksByAuthor());
-		cmdList.put("T", () -> booksCol.getBooksByTitle());
-		cmdList.put("R", () -> booksCol.getBooksByRead());
-		cmdList.put("U", () -> booksCol.getBooksByUnread());
+		// cmdList.put("A", () -> {booksToPrint = booksCol.getBooksByAuthor();});
+		// cmdList.put("T", () -> {booksToPrint = booksCol.getBooksByTitle();});
+		// cmdList.put("R", () -> {booksToPrint = booksCol.getBooksByRead();});
+		// cmdList.put("U", () -> {booksToPrint = booksCol.getBooksByUnread();});
 
-		cmdList.get(option).run();
+		// ArrayList<Book> books = cmdList.get(option);
 
 	}
 

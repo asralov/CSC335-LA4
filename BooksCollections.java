@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -95,7 +97,12 @@ public class BooksCollections
 	}
 
 	public ArrayList<Book> getBooksByAuthor() {
-		return null;
+		System.out.println("hello");
+		ArrayList<Book> listToReturn = getCopy();
+
+		Collections.sort(listToReturn, new CompareByAuthor());
+
+		return listToReturn;
 
 	}
 	public ArrayList<Book> getBooksByTitle() {
@@ -107,6 +114,13 @@ public class BooksCollections
 	}
 	public ArrayList<Book> getBooksByUnread() {
 		return null;
+	}
+
+	public ArrayList<Book> getCopy() {
+		ArrayList<Book> copy = new ArrayList<>(List.copyOf(books));
+
+		return copy;
+
 	}
 	
     public String toString() {

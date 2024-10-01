@@ -96,13 +96,22 @@ public class BooksCollections
 		}
 	}
 
-	public ArrayList<Book> getBooksByAuthor() {
-		System.out.println("hello");
+	// public ArrayList<Book> getBooksByAuthor() {
+	// 	System.out.println("hello");
+	// 	ArrayList<Book> listToReturn = getCopy();
+
+	// 	Collections.sort(listToReturn, new CompareByAuthor());
+
+	// 	return listToReturn;
+
+	// }
+
+	public void getBooksByAuthor(ArrayList<Book> listToPrint) {
 		ArrayList<Book> listToReturn = getCopy();
 
 		Collections.sort(listToReturn, new CompareByAuthor());
 
-		return listToReturn;
+		listToPrint = listToReturn;
 
 	}
 	public ArrayList<Book> getBooksByTitle() {

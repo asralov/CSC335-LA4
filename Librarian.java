@@ -67,7 +67,6 @@ public class Librarian {
 			{
 				// createa an arrayList and append each element to it
 				System.out.println("We found for you (by Rating): ");
-				int idx = 0;
 				printBooks(books);
 
 				return books;

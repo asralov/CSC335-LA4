@@ -1,3 +1,10 @@
+/**
+ * File: CompareByTitle.java
+ * Author: Pulat Uralov
+ * Purpose: This is a little class that uses Comparator interface
+ * so we can specifically say to compare objects, in our case, by
+ * title
+ */
 import java.util.Comparator;
 
 public class CompareByTitle implements Comparator<Book>{

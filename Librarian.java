@@ -1,16 +1,30 @@
+/**
+ * File: Librarian.java
+ * Author: Abrorjon Asralov, Pulat Uralov
+ * Purpose: This is a vital class where all controlling and 
+ * brain related part is hapenning. It makes sense to call
+ * it librarian because all job is done by this file which
+ * takes care of passing things around and handling messages
+ * for user interface.
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Librarian {
+public class Librarian 
+{
     private Scanner sc;
     private BooksCollections booksCol;
 
 	/**
-	 * 
-	 * @param scanner
-	 * @param booksCollection
+	 * This is a public constructor which takes two parameters, first one is a
+	 * scanner that is passed from MyLibrary class, second is a BooksCollections
+	 * class that is a collection of books to which librarian has access and can
+	 * do commands to satisfy user's valid commands
+	 * @param scanner is a scanner object passed from UI
+	 * @param booksCollection is a collection of book objects
 	 */
     public Librarian(Scanner scanner, BooksCollections booksCollection) {
         this.sc = scanner;
@@ -19,8 +33,12 @@ public class Librarian {
 
 
 	/**
-	 * 
-	 * @return
+	 * This is a public getter method that should search for books depending on
+	 * the search option, the reason for making it return a collection of books
+	 * after search is because some commands require for a specific search to work 
+	 * with book objects, so we can just search and return for other commands to
+	 * work with
+	 * @return an array list of book objects
 	 */
     public ArrayList<Book> searchBook() {
 		System.out.println("Choose an option for search command and enter one of the letters:");

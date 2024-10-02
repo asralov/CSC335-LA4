@@ -14,8 +14,7 @@ import java.util.Scanner;
 
 public class BooksCollections
 {
-
-	private ArrayList<Book> books;
+	private ArrayList<Book> books; // an array list of book objects
 	public BooksCollections()
 	{
 		this.books = new ArrayList<>();
@@ -101,13 +100,13 @@ public class BooksCollections
 	/*
 	 * appendCollection(String fileName) -- adds a collection of
 	 * Book objects to the array list from a file specified by the
-	 * given fileName
+	 * given fileName. Returns true if file succesfully read and
+	 * processed, false otherwise.
 	 */
 	public boolean appendCollection(String fileName) 
 	{
 		try
 		{
-			// File obj = new File("src/" + fileName);
 			File obj = new File(fileName);
 			Scanner reader = new Scanner(obj);
 			
@@ -130,7 +129,6 @@ public class BooksCollections
 			System.out.println("Oopsie, something went wrong, please make sure");
 			System.out.println("you enterted a valid file with .txt extenstion");
 			return false; // returning false to indicate file is not valid
-
 		}
 	}
 
@@ -203,6 +201,7 @@ public class BooksCollections
 	
 	/*
 	 * toString() -- prints the BookCollections instance
+	 * for debugging purposes.
 	 */
     public String toString() {
         String temp = "";

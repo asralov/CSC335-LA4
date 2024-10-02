@@ -1,3 +1,11 @@
+/*
+ * File: MyLibrary.java
+ * Authors: Abrorjon Asralov, Pulat Uralov
+ * Purpose: By using MVC pattern, this is a file for V - View. User can 
+ * only see how program should work interfacewise. All the processing is
+ * happening on the background.
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -8,17 +16,20 @@ public class MyLibrary
 	
     public static void main(String[] args)
     {
-    	// Writing a welcome message
+    	// writing a welcome message
     	WelcomeMessage wm = new WelcomeMessage();
     	System.out.println(wm);
     	System.out.println("If you need to see a set of commands, please enter \"help\"");
     	System.out.println("If you want to exit the program, please enter \"stop\"");
 
-    	
-    	// craeting an instance of librarian who will control books
-    	// librarian = new Librarian(new BooksCollections());
-    	
+		// creating a scanner object to get user input
+		sc = new Scanner(System.in);
+
+		// craeting an instance of librarian who will control books
+		Librarian commandProcessor = new Librarian(sc, new BooksCollections());
+
     	// getting mapped our librarian's tasks to map to his duties with description
+		// for user interface purpose only
     	Map<String, String> duties = new HashMap<>();
     	duties.put("search", "helps to search for books by title, author, or rating");
     	duties.put("addBook", "asks the user for an extra information such as author,\ntitle names and rating to add a new book to the book collection");
@@ -28,11 +39,10 @@ public class MyLibrary
     	duties.put("suggestRead", "gets a random book from the library and suggests\nit to the user");
     	duties.put("addBooks", "reads a file in a specific format, so those books are\nadded to the book collection");
 
-		sc = new Scanner(System.in);
-		Librarian commandProcessor = new Librarian(sc, new BooksCollections());
-
+		// this is a hashmap where we point user's processed command to run a lamda function
+		// that is managed by the linrarian class. If user enters a valid command, it should
+		// trigger that lambda function and librarian will take care of everything on its side
 		Map<String, Runnable> cmdList = new HashMap<>();
-
 		cmdList.put("search", () -> {commandProcessor.searchBook();});
 		cmdList.put("addbook", () -> {commandProcessor.addBook();});
 		cmdList.put("settoread", () -> {commandProcessor.setToRead();});
@@ -42,10 +52,10 @@ public class MyLibrary
 		cmdList.put("addbooks", () -> {commandProcessor.addBooks();});
 
 		System.out.print("> ");
-    	String userInput = sc.nextLine().toLowerCase();
-    	while (!userInput.equals("stop"))
-    	{
-			
+		// converting to lowercase to avoid case sensitivity of the commands
+    	String userInput = sc.nextLine().toLowerCase();  
+    	while (!userInput.equals("stop"))  // if user wants to exit the prgram
+    	{	
     		// printing the helper command where we show all other available commands
     		if (userInput.equals("help"))
     		{
@@ -55,27 +65,22 @@ public class MyLibrary
     	            System.out.println(entry.getKey() + " -- " + entry.getValue());
     	            System.out.println("*****************************************************************");
     	        }
-    		}
-    		// else case when user entered some invalid or miss spelled command
-    		// so we show that no command was executed and ask them to enter a valid
-    		// command
-    		
-			// gets called when searching for a book by rating or when rating
-			// needs to account for those inputs
+    		}	
+			// if command does not exist, we print a message to the user to try again with valid command
     		if (cmdList.get(userInput) == null)
     		{
     			System.out.print("Oopsie, it seems you entered an invalid or incorrectly spelled\ncommand,");
     			System.out.println(" please go over the list of commands and try again!");
-    		} else {
+    		} 
+			// otherwise, we succesfully trigger a lambda function
+			else 
+			{
 				cmdList.get(userInput).run();
 			}
 			// to read a next new command
 			System.out.print("> ");
 			userInput = sc.nextLine().toLowerCase();
-    	}
-    	
-    	
-    	sc.close();
-    	
+    	}	
+    	sc.close();	 // closing the scanner to prevent memory leak
     }
 }

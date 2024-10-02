@@ -1,3 +1,10 @@
+/**
+ * File: CompareByAuthor.java
+ * Author: Pulat Uralov
+ * Purpose: This is a little class that uses Comparator interface
+ * so we can specifically say to compare objects, in our case, by
+ * author
+ */
 import java.util.Comparator;
 
 public class CompareByAuthor implements Comparator<Book> {

@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Librarian {
-
-
-
     private Scanner sc;
     private BooksCollections booksCol;
 
@@ -175,8 +172,6 @@ public class Librarian {
 		}
 
 		cmdList.get(option).run();
-
-		
 
 	}
 

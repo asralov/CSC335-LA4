@@ -3,12 +3,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class commandProcessor {
+public class Librarian {
+
+
 
     private Scanner sc;
     private BooksCollections booksCol;
 
-    public commandProcessor(Scanner scanner, BooksCollections booksCollection) {
+    public Librarian(Scanner scanner, BooksCollections booksCollection) {
         this.sc = scanner;
         this.booksCol = booksCollection;
     }
@@ -199,4 +201,6 @@ public class commandProcessor {
 		}
 	}
     
+
+
 }

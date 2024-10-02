@@ -29,7 +29,7 @@ public class MyLibrary
     	duties.put("addBooks", "reads a file in a specific format, so those books are\nadded to the book collection");
 
 		sc = new Scanner(System.in);
-		commandProcessor commandProcessor = new commandProcessor(sc, new BooksCollections());
+		Librarian commandProcessor = new Librarian(sc, new BooksCollections());
 
 		Map<String, Runnable> cmdList = new HashMap<>();
 

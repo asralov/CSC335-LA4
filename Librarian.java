@@ -7,11 +7,21 @@ public class Librarian {
     private Scanner sc;
     private BooksCollections booksCol;
 
+	/**
+	 * 
+	 * @param scanner
+	 * @param booksCollection
+	 */
     public Librarian(Scanner scanner, BooksCollections booksCollection) {
         this.sc = scanner;
         this.booksCol = booksCollection;
     }
 
+
+	/**
+	 * 
+	 * @return
+	 */
     public ArrayList<Book> searchBook() {
 		System.out.println("Choose an option for search command and enter one of the letters:");
 		System.out.println("\"A\" - searching by Author;\n\"T\" - searching by Title;\n\"R\" - searching by Rating;");
@@ -59,27 +69,50 @@ public class Librarian {
 		else if (option.equals("r"))
 		{
 			System.out.println("Please enter the rating of the book you are looking for: ");
-			int rating = sc.nextInt();
-            sc.nextLine();
-			// getting the list of found books
-			ArrayList<Book> books = booksCol.searchByRating(rating);
-			if (books.size() > 0)
+			String rating = sc.nextLine();
+			if (isNumeric(rating))
 			{
-				// createa an arrayList and append each element to it
-				System.out.println("We found for you (by Rating): ");
-				printBooks(books);
+				int validRate = Integer.parseInt(rating)  ;   
+				// getting the list of found books
+				ArrayList<Book> books = booksCol.searchByRating(validRate);
+				if (books.size() > 0)
+				{
+					// createa an arrayList and append each element to it
+					System.out.println("We found for you (by Rating): ");
+					printBooks(books);
 
-				return books;
+					return books;
+				}
+				else
+				{
+					System.out.println("Oopsie, we do not have that book in our storage!");
+				}	
 			}
+			// else case when it is not a valid input
 			else
 			{
-				System.out.println("Oopsie, we do not have that book in our storage!");
-			}	
+				System.out.println("Please enter a valid non-negative integer in range 1 -> 5");
+			}
     	}
 		// return empty ArrayList
 		return new ArrayList<Book>();
 	}
 
+	private boolean isNumeric(String str) {
+		if (str == null || str.isEmpty()) {
+			return false;
+		}
+		for (char c : str.toCharArray()) {
+			if (!Character.isDigit(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 */
 	public void setToRead() {
 		// prompts the user to enter the book to flag as read and calls
 		// searchBook() function
@@ -92,7 +125,18 @@ public class Librarian {
 		// If there are multiple books found
 		if (booksFound.size() > 1) {
 			System.out.println("Please specify the book from the list: ");
-			selectedBookIdx = sc.nextInt();
+			String userIDInput = sc.nextLine();
+			if (isNumeric(userIDInput))
+			{
+				selectedBookIdx = Integer.parseInt(userIDInput);
+			}
+			else
+			{
+				System.out.println("Please enter a valid integer from the given IDs");
+				return;
+			}
+			
+
 		} else {
 			selectedBookIdx = 0;
 		}
@@ -102,6 +146,9 @@ public class Librarian {
 		System.out.println("Book successfully set to read!");
 	}
 
+	/**
+	 * 
+	 */
 	public void rateBook() {
 
 		System.out.println("Please enter the book to rate: \n");
@@ -115,20 +162,47 @@ public class Librarian {
 		// If there are multiple books found
 		if (booksFound.size() > 1) {
 			System.out.println("Please enter the ID of the book: ");
-			selectedBookIdx = sc.nextInt();
+			String userIDInput = sc.nextLine();
+			if (isNumeric(userIDInput))
+			{
+				selectedBookIdx = Integer.parseInt(userIDInput);
+				if (selectedBookIdx >= booksFound.size())	
+				{
+					System.out.println("Oopsie, enter a valid existing ID");
+					return;
+				}
+			}
+			else
+			{
+				System.out.println("Please enter a valid integer from the given IDs");
+				return;
+			}
 		} else {
 			selectedBookIdx = 0;
 		}
 
 		System.out.println("Please enter a rating from 1 to 5: ");
-		int rating  = sc.nextInt();
-        sc.nextLine();
+		String rating  = sc.nextLine();
+		if (isNumeric(rating))
+		{
+			int validRate = Integer.parseInt(rating);	
 
-		booksFound.get(selectedBookIdx).updateRating(rating);
+			booksFound.get(selectedBookIdx).updateRating(validRate);
+			System.out.println("Rating updated!");
+		}
+		else
+		{
+			System.out.println("Please enter a valid non-negative integer in range 1 -> 5");
+			return;
+		}
+        // sc.nextLine();
 
-		System.out.println("Rating updated!");
+
 	}
 
+	/**
+	 * 
+	 */
     public void addBook() {
         System.out.print("Please enter an author's name: ");
         String authorName = sc.nextLine();
@@ -137,20 +211,30 @@ public class Librarian {
         String titleDesc = sc.nextLine();
         
         System.out.print("Please enter a rating for the book: ");
-        int rating = sc.nextInt();
-        
-        
+        String rating = sc.nextLine();
+		if (isNumeric(rating))
+		{
+			int validRate = Integer.parseInt(rating);
+			Book newBook = new Book(titleDesc, authorName, validRate);
+			booksCol.add(newBook);
+			System.out.println("Book added succesfully!");
+		}
+		else
+		{		
+			System.out.println("Please enter a valid non-negative integer in range 1 -> 5");	
+			return;	
+		}
+         
         // To solve the issue with else block working
-        sc.nextLine(); // Consume the leftover newline
+        // sc.nextLine(); // Consume the leftover newline
 
-
-        Book newBook = new Book(titleDesc, authorName, rating);
-        booksCol.add(newBook);
-        System.out.println("Book added succesfully!");
         // for debugging purposes
         //System.out.print(librarian.books);
     }
 
+	/**
+	 * 
+	 */
     public void getBooks() {
 		System.out.println("Choose an option for getBooks command and enter one of the letters:");
 		System.out.println("\"A\" - get books by Author;" +
@@ -174,18 +258,36 @@ public class Librarian {
 
 	}
 
+	/**
+	 * 
+	 */
     public void suggestRead() {
         System.out.println("We highly recommend: " + booksCol.getRandomBook());
     }
 
+	/**
+	 * 
+	 */
     public void addBooks() {
         System.out.println("Enter a valid file name with .txt extension");
         System.out.println("(Note that a file should be located in the same directory)");
         String fileName = sc.nextLine();
-        booksCol.appendCollection(fileName);
-        System.out.println("Books added succesfully!");	
+        boolean isSuccess = booksCol.appendCollection(fileName);
+		if (!isSuccess)
+		{
+			System.out.println("Make sure the valid file is in the same directory!");
+		}
+		else
+		{
+			System.out.println("Books added succesfully!");	
+		}
+  
     }
 
+	/**
+	 * 
+	 * @param books
+	 */
 	private void printBooks(ArrayList<Book> books) {
 		int idx = 0;
 		for (Book book:books)

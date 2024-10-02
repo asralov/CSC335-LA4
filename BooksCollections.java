@@ -103,7 +103,7 @@ public class BooksCollections
 	 * Book objects to the array list from a file specified by the
 	 * given fileName
 	 */
-	public void appendCollection(String fileName) 
+	public boolean appendCollection(String fileName) 
 	{
 		try
 		{
@@ -123,10 +123,14 @@ public class BooksCollections
 				books.add(new Book(bookName, authorName));
 			}
 			reader.close();
+			return true;
 		}
 		catch(FileNotFoundException e)
 		{
-			e.printStackTrace();
+			System.out.println("Oopsie, something went wrong, please make sure");
+			System.out.println("you enterted a valid file with .txt extenstion");
+			return false; // returning false to indicate file is not valid
+
 		}
 	}
 
@@ -188,7 +192,7 @@ public class BooksCollections
 
 	/*
 	 * getCopy() -- returns the copy of the array list of Book objects,
-	 * used to achieve encapsulation
+	 * used to achieve encapsulation and avoid escaping reference
 	 */
 	public ArrayList<Book> getCopy() {
 		ArrayList<Book> copy = new ArrayList<>(List.copyOf(books));

@@ -41,10 +41,11 @@ public class MyLibrary
 		cmdList.put("suggestread", () -> {commandProcessor.suggestRead();});
 		cmdList.put("addbooks", () -> {commandProcessor.addBooks();});
 
-    	
+		System.out.print("> ");
     	String userInput = sc.nextLine().toLowerCase();
     	while (!userInput.equals("stop"))
     	{
+			
     		// printing the helper command where we show all other available commands
     		if (userInput.equals("help"))
     		{
@@ -69,6 +70,7 @@ public class MyLibrary
 				cmdList.get(userInput).run();
 			}
 			// to read a next new command
+			System.out.print("> ");
 			userInput = sc.nextLine().toLowerCase();
     	}
     	

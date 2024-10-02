@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Supplier;
-import java.util.function.Supplier;
 
 public class CommandProcessor {
 

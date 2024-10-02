@@ -106,23 +106,41 @@ public class BooksCollections
 
 	// }
 
-	public void getBooksByAuthor(ArrayList<Book> listToPrint) {
+	public ArrayList<Book> getBooksByAuthor() {
 		ArrayList<Book> listToReturn = getCopy();
 
 		Collections.sort(listToReturn, new CompareByAuthor());
 
-		listToPrint = listToReturn;
-
+		return listToReturn;
 	}
 	public ArrayList<Book> getBooksByTitle() {
-		return null;
-		
+		ArrayList<Book> listToReturn = getCopy();
+
+		Collections.sort(listToReturn, new CompareByTitle());
+
+		return listToReturn;
 	}
 	public ArrayList<Book> getBooksByRead() {
-		return null;
+		ArrayList<Book> listToReturn = new ArrayList<Book>();
+
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).isRead()) {
+				listToReturn.add(books.get(i));
+			}
+		}
+		Collections.sort(listToReturn, new CompareByAuthor());
+		return listToReturn;
 	}
 	public ArrayList<Book> getBooksByUnread() {
-		return null;
+		ArrayList<Book> listToReturn = new ArrayList<Book>();
+
+		for (int i = 0; i < books.size(); i++) {
+			if (!books.get(i).isRead()) {
+				listToReturn.add(books.get(i));
+			}
+		}
+		Collections.sort(listToReturn, new CompareByAuthor());
+		return listToReturn;
 	}
 
 	public ArrayList<Book> getCopy() {

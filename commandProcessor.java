@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CommandProcessor {
+public class commandProcessor {
 
     private Scanner sc;
     private BooksCollections booksCol;
 
-    public CommandProcessor(Scanner scanner, BooksCollections booksCollection) {
+    public commandProcessor(Scanner scanner, BooksCollections booksCollection) {
         this.sc = scanner;
         this.booksCol = booksCollection;
     }
@@ -28,12 +28,7 @@ public class CommandProcessor {
 			{
 				// createa an arrayList and append each element to it
 				System.out.println("We found for you (by Author): ");
-				int idx = 0;
-				for (Book book:books)
-				{
-					System.out.println("id: " + idx + " - " +  book);
-					idx++;
-				}
+				printBooks(books);
 
 				return books;
 				
@@ -53,12 +48,7 @@ public class CommandProcessor {
 			{
 				// createa an arrayList and append each element to it
 				System.out.println("We found for you (by Title): ");
-				int idx = 0;
-				for (Book book:books)
-				{
-					System.out.println("id: " + idx + " - " +  book);
-					idx++;
-				}
+				printBooks(books);
 
 				return books;
 			}
@@ -79,11 +69,7 @@ public class CommandProcessor {
 				// createa an arrayList and append each element to it
 				System.out.println("We found for you (by Rating): ");
 				int idx = 0;
-				for (Book book:books)
-				{
-					System.out.println("id: " + idx + " - " +  book);
-					idx++;
-				}
+				printBooks(books);
 
 				return books;
 			}
@@ -175,12 +161,20 @@ public class CommandProcessor {
 							"\n\"U\" - get book that have not been read;");
 		String option = sc.nextLine().toLowerCase();
 		Map<String, Runnable> cmdList = new HashMap<>();
-		// ArrayList<Book> booksToPrint = new ArrayList<Book>();
 		
-		// cmdList.put("A", (BooksCollections booksCol) -> {return booksCol.getBooksByAuthor();});
-        // cmdList.put("T", (BooksCollections booksCol) -> {return booksCol.getBooksByTitle();});
-        // cmdList.put("R", (BooksCollections booksCol) -> {return booksCol.getBooksByRead();});
-        // cmdList.put("U", (BooksCollections booksCol) -> {return booksCol.getBooksByUnread();});
+		cmdList.put("a", () -> {ArrayList<Book> booksToPrint = booksCol.getBooksByAuthor();printBooks(booksToPrint);});
+        cmdList.put("t", () -> {ArrayList<Book> booksToPrint = booksCol.getBooksByTitle();printBooks(booksToPrint);});
+        cmdList.put("r", () -> {ArrayList<Book> booksToPrint = booksCol.getBooksByRead();printBooks(booksToPrint);});
+        cmdList.put("u", () -> {ArrayList<Book> booksToPrint = booksCol.getBooksByUnread();printBooks(booksToPrint);});
+
+		if (cmdList.get(option) == null) {
+			System.out.println("Command not found!");
+			return;
+		}
+
+		cmdList.get(option).run();
+
+		
 
 	}
 
@@ -195,5 +189,14 @@ public class CommandProcessor {
         booksCol.appendCollection(fileName);
         System.out.println("Books added succesfully!");	
     }
+
+	private void printBooks(ArrayList<Book> books) {
+		int idx = 0;
+		for (Book book:books)
+		{
+			System.out.println("id: " + idx + " - " +  book);
+			idx++;
+		}
+	}
     
 }

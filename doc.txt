@@ -28,17 +28,18 @@ CompareByTitle.java -- compares books by title of the books
                 THE INTERFACE INVOLVED
 ------------------------------------------------------------
 
+CompareByAuthor implements Comparator<Book> -- uses 
+Comparator interface. Takes the first Books object and 
+compares its 'author' String instance variable with another 
+Book object's 'author' instance variable.
+---
+CompareByTitle implements Comparator<Book> -- uses 
+Comparator interface. Takes the first Books object and 
+compares its 'title' String instance variable with another 
+Book object's 'title' instance variable.
 
-
-
-
-
-
-
-
-
-
-
+Both of these classes compare two Book objects using 
+String's compareTo method
 ------------------------------------------------------------
 
 ------------------------------------------------------------
@@ -86,13 +87,20 @@ care of all manipulations.
 ------------------------------------------------------------
                     DESIGN PATTERNS
 ------------------------------------------------------------
-
-
-
-
-
-
-
-
-
+Design Pattern - Strategy. Used Comparator Interface to make
+a family of algorithms that compare two Book objects in
+different ways. We use these classes interchangeably 
+depending on the client's request
+---
+Design Antipattern avoided - Switch Cases. By using a 
+number of different ways to construct the code we avoided
+having to use switch cases and repetetive if-else
+statements
+A. Use of Hashmaps - instead of writing lots of if-else
+statements to check for user input, we mapped all commands
+into a hashmap that calls differnt methods depending on
+the user's input.
+B. Use of Interface - by using an interface we don't
+need to use a flag to indicate what comparator to use
+in what case. 
 ------------------------------------------------------------

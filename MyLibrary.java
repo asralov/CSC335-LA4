@@ -82,7 +82,8 @@ public class MyLibrary
 			// to read a next new command
 			System.out.print("> ");
 			userInput = sc.nextLine().toLowerCase();
-    	}	
+    	}
+		System.out.println("Exiting the program...");	
     	sc.close();	 // closing the scanner to prevent memory leak
     }
 }

@@ -45,19 +45,31 @@ String's compareTo method
 ------------------------------------------------------------
                     LIBRARY CLASSES
 ------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
+Random -- for getting a radnom index when we suggest a 
+random unread book from a book collection
+HashMap -- using for two cases, one is handling methods by 
+using lambdas to call those methods when they are triggered.
+The other case, user interface wise, we have a help command
+that is supposed to print command - commandDescription. 
+So we have a mapping of string to string. It is for giving
+an information to the user on whether what commands do we 
+have available in our program
+Scanner -- for getting user input, and also, when we have
+to read a file, we read that using scanner object
+Comparator -- is used to be interface for our two files:
+CompareByAuthor.java and CompareByTitle.java those 
+implements Comparator. 
+File -- is used to create a file object that can be passed
+to the scanner, so we can read contents of that file.
+FileNotFoundException -- is used to catch an error when
+file may not exist (case when user most likely made a 
+mistake on inputing a file name)
+Collections -- is used for sorting purposes. It gets a 
+copy of the array we working, and gets second parameter
+to be a file name where user want to get a book sorted 
+by author or title. Then it gets sorted by given property.
+ArrayList -- is used to store book objects for flexible 
+manipulations
 ------------------------------------------------------------
 
 ------------------------------------------------------------

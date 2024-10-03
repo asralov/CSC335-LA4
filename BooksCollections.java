@@ -2,7 +2,12 @@
  * File: BooksCollections.java
  * Authors: Abrorjon Asralov, Pulat Uralov
  * Purpose: this is the model of MyLibrary.java, takes care
- * of main logic, including searching and sorting
+ * of main logic, including searching and sorting, and
+ * we have our array list to be private, so user cannot 
+ * interract with this class. Actually, user cannot interract
+ * with this class at all, because the all communication is done
+ * through Librarian class, which gets this class instance and
+ * fully control the workflow. 
  */
 import java.io.File;
 import java.io.FileNotFoundException;

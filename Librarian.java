@@ -1,6 +1,8 @@
 /**
  * File: Librarian.java
  * Author: Abrorjon Asralov, Pulat Uralov
+ * Username: asralov, uralovpulya
+ * 
  * Purpose: This is a vital class where all controlling and 
  * brain related part is hapenning. It makes sense to call
  * it librarian because all job is done by this file which

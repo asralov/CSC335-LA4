@@ -1,6 +1,8 @@
 /**
  * File: Book.java
  * Author: Abrorjon Asralov, Pulat Uralov
+ * Username: asralov, uralovpulya
+ * 
  * Purpose: This is a class for creating instances of Book objects.
  * it has author, title, rating, status properties so we can work 
  * with them. We reach encapsulation by having private variables

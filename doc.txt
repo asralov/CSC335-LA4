@@ -1,0 +1,98 @@
+Author: Abrorjon Asralov, Pulat Uralov
+Username: asralov, uralovpulya
+------------------------------------------------------------
+                       THE CLASSES
+------------------------------------------------------------
+MyLibrary.java -- works as a view program,
+user should be mainly running that file, and it works as
+a UI. Librarian class is responsible for doing all work.
+---
+Book.java -- creates an instance of book object. It has got
+properties such as author name, title, rating and status 
+(read or unread).
+---
+BooksCollections.java -- works as a "shelfe" for our library
+app. It has got a collection of book objects. 
+---
+Librarian.java -- functions like command processor. Works
+with user input, and tries to complete a command that is
+given by user. Has methods for completing the user's 
+commands.
+---
+CompareByAuthor.java -- compares books by author names
+---
+CompareByTitle.java -- compares books by title of the books
+------------------------------------------------------------
+
+------------------------------------------------------------
+                THE INTERFACE INVOLVED
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+------------------------------------------------------------
+                    LIBRARY CLASSES
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+------------------------------------------------------------
+                  DATA STRUCTURES USED 
+------------------------------------------------------------
+HashMap -- is helpful for storing runnable lambda functions,
+so instead of having many nested if else statements in view
+model, we carefully take care of it by having our controller
+process it with different methods corresponding to the 
+command name. And after creating an instance of librarian,
+we simply assign strings those are commands to trigger
+lambda functions those call librarian's corresponding method
+to take care of user's command. To achieve this, we are 
+having a hashmap that is -> HashMap<String, Runnable> where
+string is a command, and runnable is a lambda function that 
+is waiting for being triggered after succesfull user's input
+---
+ArrayList -- is used for storing book objects. The reason 
+for choosing this over primitive arrays in java, it is 
+easy to work with array list, they are dynamically changed
+and managed. Easy to add, delete, change objects inside.
+Instead of having Book[N] where we have to worry to resize
+our primitive array, we have ArrayList<Book> that takes 
+care of all manipulations.
+------------------------------------------------------------
+
+------------------------------------------------------------
+                    DESIGN PATTERNS
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------

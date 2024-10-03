@@ -1,6 +1,8 @@
 /*
  * File: MyLibrary.java
  * Authors: Abrorjon Asralov, Pulat Uralov
+ * Username: asralov, uralovpulya
+ * 
  * Purpose: By using MVC pattern, this is a file for V - View. User can 
  * only see how program should work interfacewise. All the processing is
  * happening on the background.

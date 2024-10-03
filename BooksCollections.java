@@ -1,6 +1,8 @@
 /*
  * File: BooksCollections.java
  * Authors: Abrorjon Asralov, Pulat Uralov
+ * Username: asralov, uralovpulya
+ *
  * Purpose: this is the model of MyLibrary.java, takes care
  * of main logic, including searching and sorting, and
  * we have our array list to be private, so user cannot 

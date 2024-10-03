@@ -1,6 +1,8 @@
 /**
  * File: CompareByAuthor.java
- * Author: Abrorjon Asralov, Pulat Uralov
+ * Author: Abrorjon Asralov, Pulat Uralov 
+ * Username: asralov, uralovpulya
+ * 
  * Purpose: This is a little class that uses Comparator interface
  * so we can specifically say to compare objects, in our case, by
  * author

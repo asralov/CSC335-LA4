@@ -1,7 +1,10 @@
-import javax.swing.*;
+package view;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.File;;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class MyLibraryGUI 
 {
     private static JFrame mainWindow;
@@ -11,6 +14,51 @@ public class MyLibraryGUI
     private static JButton addBooksButton;
     private static JButton searchButton;
     
+
+    private static void styleButton(JButton button)
+    {
+        Color defaultColor = new Color(0,0,0);
+        button.setOpaque(true);
+        button.setBackground(defaultColor);
+        button.setForeground(Color.WHITE);
+
+        // Remove the default border if not needed
+        button.setBorder(BorderFactory.createEmptyBorder());
+        
+        // Disable the content area fill to avoid default button background color effects
+        button.setContentAreaFilled(true);            // true if you want the color to cover the button completely
+
+        // Optional: Remove focus paint (e.g., dotted border when clicked or tabbed to)
+        button.setFocusPainted(false);
+        //button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1)); // can change the border
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e)
+            {
+                button.setBackground(new Color(50, 50, 50));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e)
+            {
+                button.setBackground(defaultColor);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                button.setBackground(new Color(100, 100, 100));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+                button.setBackground(new Color(50,50,50));
+            }
+        });
+    }
+
 
     private static void setUp()
     {
@@ -98,6 +146,11 @@ public class MyLibraryGUI
         addBookButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         addBooksButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // styling the buttons
+        styleButton(addBookButton);
+        styleButton(addBooksButton);
+        styleButton(searchButton);
 
         sidebarPanel.add(addBookButton);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Space between buttons

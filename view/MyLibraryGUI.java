@@ -13,6 +13,7 @@ public class MyLibraryGUI
     private static JButton addBookButton;
     private static JButton addBooksButton;
     private static JButton searchButton;
+    private static JComboBox<String> optionBox;
     
 
     private static void styleButton(JButton button)
@@ -36,7 +37,7 @@ public class MyLibraryGUI
             @Override
             public void mouseEntered(MouseEvent e)
             {
-                button.setBackground(new Color(50, 50, 50));
+                button.setBackground(new Color(55,55, 55));
             }
 
             @Override
@@ -48,13 +49,13 @@ public class MyLibraryGUI
             @Override
             public void mousePressed(MouseEvent e)
             {
-                button.setBackground(new Color(100, 100, 100));
+                button.setBackground(new Color(80, 80, 80));
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                button.setBackground(new Color(50,50,50));
+                button.setBackground(new Color(55,55,55));
             }
         });
     }
@@ -79,32 +80,65 @@ public class MyLibraryGUI
         // showing the window
         mainWindow.setVisible(true);
     }
-
-    private static void createHeader()
-    {
+    private static void createHeader() {
         mainWindow.setLayout(new BorderLayout());
-        // Create a panel for the header
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(30,30,30)); // rgb: 70,130,180
-        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
         
+        // Create a panel for the header with GridBagLayout
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(new Color(30, 30, 30)); // Background color
+        headerPanel.setLayout(new GridBagLayout()); // Use GridBagLayout for flexibility
+    
+        // Create a GridBagConstraints object for positioning
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        // Logo setup
         ImageIcon logoIcon = new ImageIcon("logo.png");
         Image logoImage = logoIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         JLabel logoLabel = new JLabel(new ImageIcon(logoImage));
-        headerPanel.add(logoLabel);
-
         
-        // Add the app name next to the logo
+        // Add logo to the left side
+        gbc.gridx = 0; // Column 0
+        gbc.gridy = 0; // Row 0
+        gbc.insets = new Insets(0, 10, 0, 10); // Padding around the logo
+        headerPanel.add(logoLabel, gbc);
+    
+        // App name
         JLabel appNameLabel = new JLabel("My Library");
         appNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
         appNameLabel.setForeground(Color.WHITE); // Set text color to white
-        headerPanel.add(appNameLabel);
+        
+        // Add app name next to the logo
+        gbc.gridx = 1; // Column 1
+        headerPanel.add(appNameLabel, gbc);
+    
+        // Create a separate panel for filters
+        JPanel filterPanel = new JPanel();
+        filterPanel.setBackground(new Color(30, 30, 30)); // Match the header panel color
+        filterPanel.setLayout(new FlowLayout(FlowLayout.RIGHT)); // Right alignment for combo boxes
+    
+        // Author filter combo box
+        JLabel filteredByText = new JLabel("Filtered By: ");
+        filteredByText.setFont(new Font("Arial", Font.PLAIN, 16));
+        filteredByText.setForeground(Color.WHITE); // Set text color to white
 
+        String[] options = {" ", "By Author", "By Title"};
+        optionBox = new JComboBox<>(options);
+        optionBox.setPreferredSize(new Dimension(150, 30));
+        optionBox.setBackground(Color.WHITE);
+
+        filterPanel.add(filteredByText);
+        filterPanel.add(optionBox);
+    
+        // Add the filter panel to the right side
+        gbc.gridx = 2; // Column 2
+        gbc.weightx = 1.0; // Allow the filter panel to take available space
+        gbc.anchor = GridBagConstraints.EAST; // Align to the right
+        headerPanel.add(filterPanel, gbc);
+    
         // Add the header panel to the top of the frame
         mainWindow.add(headerPanel, BorderLayout.NORTH);
     }
-
+    
     private static void setupSidebar() {
         // Create a sidebar panel
         JPanel sidebarPanel = new JPanel();

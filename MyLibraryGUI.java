@@ -1,9 +1,16 @@
 import javax.swing.*;
 
-import java.awt.*;;
+import java.awt.*;
+import java.io.File;;
 public class MyLibraryGUI 
 {
     private static JFrame mainWindow;
+
+    // command buttons
+    private static JButton addBookButton;
+    private static JButton addBooksButton;
+    private static JButton searchButton;
+    
 
     private static void setUp()
     {
@@ -15,6 +22,8 @@ public class MyLibraryGUI
         mainWindow.setLocationRelativeTo(null);
         // creating a header
         createHeader();
+        // creating a sidebar
+        setupSidebar();
         // creating a body
         setupBody();
         // makinf the close opereation to exit the program
@@ -47,6 +56,59 @@ public class MyLibraryGUI
         // Add the header panel to the top of the frame
         mainWindow.add(headerPanel, BorderLayout.NORTH);
     }
+
+    private static void setupSidebar() {
+        // Create a sidebar panel
+        JPanel sidebarPanel = new JPanel();
+        sidebarPanel.setBackground(new Color(40, 40, 40)); // Darker gray for sidebar
+        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+        sidebarPanel.setPreferredSize(new Dimension(300, 0)); // Set sidebar width
+
+        //Section 1: Librarian picture
+        JLabel librarianLabel = new JLabel();
+        ImageIcon librarianIcon = new ImageIcon("librarian.png"); 
+        Image librarianImage = librarianIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        librarianLabel.setIcon(new ImageIcon(librarianImage));
+        librarianLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add spacing at top
+        sidebarPanel.add(librarianLabel);
+
+        // JLabel librarianLabel = new JLabel(new ImageIcon("librarian.png"));
+        // librarianLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add spacing at top
+        // sidebarPanel.add(librarianLabel);
+
+        // Section 2: Command buttons
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between image and buttons
+        addBookButton = new JButton("ADD BOOK");
+        addBooksButton = new JButton("ADD BOOKS");
+        searchButton = new JButton("SEARCH");
+        Dimension buttonSize = new Dimension(200, 40);
+        addBookButton.setPreferredSize(buttonSize);
+        addBookButton.setMaximumSize(buttonSize);
+        addBookButton.setMinimumSize(buttonSize);
+        
+        addBooksButton.setPreferredSize(buttonSize);
+        addBooksButton.setMaximumSize(buttonSize);
+        addBooksButton.setMinimumSize(buttonSize);
+        
+        searchButton.setPreferredSize(buttonSize);
+        searchButton.setMaximumSize(buttonSize);
+        searchButton.setMinimumSize(buttonSize);
+        addBookButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addBooksButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        sidebarPanel.add(addBookButton);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Space between buttons
+        sidebarPanel.add(addBooksButton);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        sidebarPanel.add(searchButton);
+
+        // Add sidebar panel to the left of the main window
+        mainWindow.add(sidebarPanel, BorderLayout.WEST);
+    }
+
 
     private static void setupBody() {
         // Create a panel for the body

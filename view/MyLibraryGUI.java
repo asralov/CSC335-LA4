@@ -141,7 +141,7 @@ public class MyLibraryGUI
                 label.setForeground(Color.WHITE);                    // Text color
                 label.setBackground(Color.BLACK);                    // Background color
                 label.setPreferredSize(new Dimension(150, 25));
-                
+
 
                 // Change the background color when an item is selected
                 if (isSelected) {
@@ -188,7 +188,7 @@ public class MyLibraryGUI
         sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
         sidebarPanel.setPreferredSize(new Dimension(300, 0)); // Set sidebar width
 
-        //Section 1: Librarian picture
+        //Librarian picture
         JLabel librarianLabel = new JLabel();
         ImageIcon librarianIcon = new ImageIcon("librarian.png"); 
         Image librarianImage = librarianIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -197,12 +197,7 @@ public class MyLibraryGUI
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add spacing at top
         sidebarPanel.add(librarianLabel);
 
-        // JLabel librarianLabel = new JLabel(new ImageIcon("librarian.png"));
-        // librarianLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add spacing at top
-        // sidebarPanel.add(librarianLabel);
-
-        // Section 2: Command buttons
+       //Command buttons
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between image and buttons
         addBookButton = new JButton("ADD BOOK");
         addBooksButton = new JButton("ADD BOOKS");

@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,7 +14,6 @@ public class MyLibraryGUI
     // command buttons
     private static JButton addBookButton;
     private static JButton addBooksButton;
-    private static JButton searchButton;
     private static JComboBox<String> optionBox;
     
 
@@ -117,17 +118,58 @@ public class MyLibraryGUI
         filterPanel.setLayout(new FlowLayout(FlowLayout.RIGHT)); // Right alignment for combo boxes
     
         // Author filter combo box
-        JLabel filteredByText = new JLabel("Filtered By: ");
-        filteredByText.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel filteredByText = new JLabel("Filtered By ");
+        filteredByText.setFont(new Font("Arial", Font.PLAIN, 14));
         filteredByText.setForeground(Color.WHITE); // Set text color to white
 
-        String[] options = {" ", "By Author", "By Title"};
+        String[] options = {"Author", "Title"};
         optionBox = new JComboBox<>(options);
-        optionBox.setPreferredSize(new Dimension(150, 30));
-        optionBox.setBackground(Color.WHITE);
+        // Basic styling
+        optionBox.setPreferredSize(new Dimension(150, 25));
+        optionBox.setForeground(Color.WHITE);     // Set text color
+        optionBox.setBackground(Color.BLACK);     // Set background color
+        optionBox.setFocusable(false);                   
+    
+        // Custom renderer to apply background color to the main part of the combo box
+        optionBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                        boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // Center-align text
+                label.setFont(new Font("Arial", Font.PLAIN, 12));    // Keep font consistent
+                label.setForeground(Color.WHITE);                    // Text color
+                label.setBackground(Color.BLACK);                    // Background color
+                label.setPreferredSize(new Dimension(150, 25));
+                
+
+                // Change the background color when an item is selected
+                if (isSelected) {
+                    label.setBackground(new Color(70, 70, 70));      // Slightly different color for selection
+                }         
+                return label;
+            }
+        });
+
+        optionBox.setBorder(BorderFactory.createEmptyBorder());
+        // Hide the arrow icon
+        optionBox.setUI(new BasicComboBoxUI() {
+            @Override
+            protected JButton createArrowButton() {
+                // Return a button with no icon or background to hide the arrow
+                JButton arrowButton = new JButton();
+                arrowButton.setBorder(BorderFactory.createEmptyBorder());
+                arrowButton.setVisible(false);  // Hide the button
+                return arrowButton;
+            }
+        });
+
+
 
         filterPanel.add(filteredByText);
         filterPanel.add(optionBox);
+
+
     
         // Add the filter panel to the right side
         gbc.gridx = 2; // Column 2
@@ -164,7 +206,7 @@ public class MyLibraryGUI
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between image and buttons
         addBookButton = new JButton("ADD BOOK");
         addBooksButton = new JButton("ADD BOOKS");
-        searchButton = new JButton("SEARCH");
+
         Dimension buttonSize = new Dimension(200, 40);
         addBookButton.setPreferredSize(buttonSize);
         addBookButton.setMaximumSize(buttonSize);
@@ -174,23 +216,17 @@ public class MyLibraryGUI
         addBooksButton.setMaximumSize(buttonSize);
         addBooksButton.setMinimumSize(buttonSize);
         
-        searchButton.setPreferredSize(buttonSize);
-        searchButton.setMaximumSize(buttonSize);
-        searchButton.setMinimumSize(buttonSize);
         addBookButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         addBooksButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // styling the buttons
         styleButton(addBookButton);
         styleButton(addBooksButton);
-        styleButton(searchButton);
 
         sidebarPanel.add(addBookButton);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Space between buttons
         sidebarPanel.add(addBooksButton);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        sidebarPanel.add(searchButton);
 
         // Add sidebar panel to the left of the main window
         mainWindow.add(sidebarPanel, BorderLayout.WEST);

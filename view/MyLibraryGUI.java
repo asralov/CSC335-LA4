@@ -2,7 +2,6 @@ package view;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +14,10 @@ public class MyLibraryGUI
     private static JButton addBookButton;
     private static JButton addBooksButton;
     private static JComboBox<String> optionBox;
+    private static JPanel searchPanel;
+    private static JTextField searchBar;
+
+    private static String[] books = {" Some Books "};
     
 
     private static void styleButton(JButton button)
@@ -227,6 +230,21 @@ public class MyLibraryGUI
         mainWindow.add(sidebarPanel, BorderLayout.WEST);
     }
 
+    private static void addBooksToPanel(JPanel booksPanel)
+    {
+        // simulating of adding 15 books
+        for (int i = 0; i < 15; i++)
+        {
+            String authorName = "UKNOWN";
+            String titleName = "Hello World and Hello dear Programmer";
+            int rating = 5;
+
+            BookBox bookBox = new BookBox(titleName, authorName, rating);
+            booksPanel.add(bookBox);
+            booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
+        
+        }
+    }
 
     private static void setupBody() {
         // Create a panel for the body
@@ -234,14 +252,51 @@ public class MyLibraryGUI
         bodyPanel.setBackground(new Color(45, 45, 45)); // Darker background for the body
         bodyPanel.setLayout(new BorderLayout()); // Layout for body panel
 
-        // You can add components to the body panel here
-        JLabel bodyLabel = new JLabel("Welcome to My Library!");
-        bodyLabel.setFont(new Font("Arial", Font.PLAIN, 24));
-        bodyLabel.setForeground(Color.WHITE); // Set text color to white
-        bodyLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the label
+      
+        searchPanel = new JPanel();
+        searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        searchPanel.setBackground(new Color(45, 45, 45));
 
-        // Add the body label to the center of the body panel
-        bodyPanel.add(bodyLabel, BorderLayout.CENTER);
+        // adding a search bar
+        searchBar = new JTextField();
+        searchBar.setPreferredSize(new Dimension(650, 30));
+        searchBar.setFont(new Font("Arial", Font.PLAIN, 14));
+        searchBar.setForeground(Color.WHITE);
+        searchBar.setBackground(new Color(70, 70, 70));
+        searchBar.setCaretColor(Color.WHITE);
+        searchBar.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+        searchPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        searchPanel.add(searchBar);
+        bodyPanel.add(searchPanel, BorderLayout.NORTH);
+
+        JPanel booksPanel = new JPanel();
+        booksPanel.setBackground(new Color(45, 45, 45));
+        booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
+    
+
+        if (books.length == 0)
+        {
+            booksPanel.setLayout(new BorderLayout());
+            JLabel noBooksText = new JLabel("Oopsie, no books in the database . . . ", SwingConstants.CENTER);
+            noBooksText.setFont(new Font("Arial", Font.PLAIN, 16)); // Optional: set font size
+            noBooksText.setForeground(Color.WHITE);
+            booksPanel.add(noBooksText, BorderLayout.CENTER);
+        }
+
+        else 
+        {
+            addBooksToPanel(booksPanel);
+        }
+
+
+        // Add booksPanel to a scroll pane for scrolling
+        JScrollPane scrollPane = new JScrollPane(booksPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Faster scrolling speed
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        bodyPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Add the body panel to the frame
         mainWindow.add(bodyPanel, BorderLayout.CENTER);

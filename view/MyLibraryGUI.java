@@ -5,6 +5,9 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class MyLibraryGUI 
 {
@@ -232,18 +235,53 @@ public class MyLibraryGUI
 
     private static void addBooksToPanel(JPanel booksPanel)
     {
-        // simulating of adding 15 books
-        for (int i = 0; i < 15; i++)
-        {
-            String authorName = "UKNOWN";
-            String titleName = "Hello World and Hello dear Programmer";
-            int rating = 5;
-
-            BookBox bookBox = new BookBox(titleName, authorName, rating);
-            booksPanel.add(bookBox);
-            booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
         
-        }
+        // // simulating of adding 15 books
+        // for (int i = 0; i < 15; i++)
+        // {
+        //     String authorName = "UKNOWN";
+        //     String titleName = "Hello World and Hello dear Programmer";
+        //     int rating = 5;
+
+        //     BookBox bookBox = new BookBox(titleName, authorName, rating);
+        //     booksPanel.add(bookBox);
+        //     booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
+        
+        // }
+
+        // trying to work on the backend's connection to UI
+        try
+		{
+			File obj = new File("books.txt");
+			Scanner reader = new Scanner(obj);
+			
+			while(reader.hasNextLine())
+			{
+				String data = reader.nextLine();
+				// split each line by ";" and add a Book object to 
+				// BookCollections
+				String[] dataSplit = data.split(";", 2);
+				String bookName = dataSplit[0];
+				String authorName = dataSplit[1];
+                if (bookName.equals("Title"))
+                    System.out.println("NOT A GOOD IDEA");
+                else
+                {
+
+                    BookBox bookBox = new BookBox(bookName, authorName, 5);
+                    booksPanel.add(bookBox);
+                    booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
+                }
+            }
+			reader.close();
+			//return true;
+		}
+		catch(FileNotFoundException e)
+		{
+			System.out.println("Oopsie, something went wrong, please make sure");
+			System.out.println("you enterted a valid file with .txt extenstion");
+			//return false; // returning false to indicate file is not valid
+		}
     }
 
     private static void setupBody() {

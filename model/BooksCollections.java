@@ -11,6 +11,8 @@
  * through Librarian class, which gets this class instance and
  * fully control the workflow. 
  */
+
+package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

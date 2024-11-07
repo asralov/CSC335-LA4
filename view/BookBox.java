@@ -50,7 +50,17 @@ public class BookBox extends JPanel {
         add(infoPanel, BorderLayout.CENTER);
 
         // Right side: Rate Button
-        JButton rateButton = new JButton("*");
+        JButton rateButton = new JButton();
+
+        // Load the star image (make sure "star.png" is in your project folder)
+        ImageIcon starIcon = new ImageIcon("star.png");
+        Image starPic = starIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        rateButton.setIcon(new ImageIcon(starPic));
+
+        // styling the button
+        rateButton.setContentAreaFilled(false);
+        rateButton.setBorderPainted(false);
+        rateButton.setFocusPainted(false);
 
         Dimension size = new Dimension(50,5);
         rateButton.setPreferredSize(size);

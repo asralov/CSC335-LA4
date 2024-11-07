@@ -11,7 +11,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+import model.*;
 public class MyLibrary
 {
 	private static Scanner sc;

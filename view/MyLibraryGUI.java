@@ -186,6 +186,145 @@ public class MyLibraryGUI
         // Add the header panel to the top of the frame
         mainWindow.add(headerPanel, BorderLayout.NORTH);
     }
+
+    private static void openAddBookWindow()
+    {
+        JDialog popWindow = new JDialog(mainWindow, "Add a New Book", true);
+        popWindow.setSize(400, 250);
+        popWindow.setLocationRelativeTo(mainWindow);
+        popWindow.getContentPane().setBackground(new Color(45,45,45));
+        // adding a grid layout for text fields
+        popWindow.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        JLabel b = new JLabel("Book Title");
+        b.setForeground(Color.WHITE);
+        popWindow.add(b, gbc);
+
+        JTextField titleField = new JTextField(20);
+        titleField.setPreferredSize(new Dimension(100, 30));
+        titleField.setFont(new Font("Arial", Font.PLAIN, 14));
+        titleField.setForeground(Color.WHITE);
+        titleField.setBackground(new Color(70, 70, 70));
+        titleField.setCaretColor(Color.WHITE);
+        titleField.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+        gbc.gridx = 1; gbc.gridy = 0;
+        popWindow.add(titleField, gbc);
+
+        // Author label and text field
+        gbc.gridx = 0; gbc.gridy = 1;
+        JLabel a = new JLabel("Author");
+        a.setForeground(Color.WHITE);
+        popWindow.add(a, gbc);
+        
+        JTextField authorField = new JTextField(20);
+        authorField.setPreferredSize(new Dimension(100, 30));
+        authorField.setFont(new Font("Arial", Font.PLAIN, 14));
+        authorField.setForeground(Color.WHITE);
+        authorField.setBackground(new Color(70, 70, 70));
+        authorField.setCaretColor(Color.WHITE);
+        authorField.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        gbc.gridx = 1; gbc.gridy = 1;
+        popWindow.add(authorField, gbc);
+
+
+        // Star Rating Label
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JLabel ratingLabel = new JLabel("Rating (1-5)");
+        ratingLabel.setForeground(Color.WHITE);
+        popWindow.add(ratingLabel, gbc);
+        String[] ratingOptions = {"1", "2", "3", "4", "5"};
+        JComboBox<String> ratingComboBox = new JComboBox<>(ratingOptions);
+
+        // Basic styling
+        ratingComboBox.setPreferredSize(new Dimension(150, 25));
+        ratingComboBox.setForeground(Color.WHITE);     // Set text color
+        ratingComboBox.setBackground(Color.BLACK);     // Set background color
+        ratingComboBox.setFocusable(false);                   
+    
+        // Custom renderer to apply background color to the main part of the combo box
+        ratingComboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                        boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // Center-align text
+                label.setFont(new Font("Arial", Font.PLAIN, 12));    // Keep font consistent
+                label.setForeground(Color.WHITE);                    // Text color
+                label.setBackground(Color.BLACK);                    // Background color
+                label.setPreferredSize(new Dimension(150, 25));
+
+
+                // Change the background color when an item is selected
+                if (isSelected) {
+                    label.setBackground(new Color(70, 70, 70));      // Slightly different color for selection
+                }         
+                return label;
+            }
+        });
+
+        ratingComboBox.setBorder(BorderFactory.createEmptyBorder());
+        // Hide the arrow icon
+        ratingComboBox.setUI(new BasicComboBoxUI() {
+            @Override
+            protected JButton createArrowButton() {
+                // Return a button with no icon or background to hide the arrow
+                JButton arrowButton = new JButton();
+                arrowButton.setBorder(BorderFactory.createEmptyBorder());
+                arrowButton.setVisible(false);  // Hide the button
+                return arrowButton;
+            }
+        });
+
+        // Star Rating field (using JComboBox)
+
+        // ratingComboBox.setPreferredSize(new Dimension(150, 30));
+        // ratingComboBox.setForeground(Color.WHITE);
+        // ratingComboBox.setBackground(new Color(70, 70, 70));
+        // ratingComboBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        // Similar styling as optionBox can be applied here (optional)
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        popWindow.add(ratingComboBox, gbc);
+
+        // Add button to submit information and styling it
+        JButton addBookConfirmButton = new JButton("Add");
+        Dimension buttonSize = new Dimension(100, 30);
+        addBookConfirmButton.setPreferredSize(buttonSize);
+        addBookConfirmButton.setMaximumSize(buttonSize);
+        addBookConfirmButton.setMinimumSize(buttonSize);
+        styleButton(addBookConfirmButton);
+        gbc.gridx = 1; gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.EAST;
+        popWindow.add(addBookConfirmButton, gbc);
+
+        // Action listener for confirming the addition of the book
+        addBookConfirmButton.addActionListener(e -> {
+            String bookTitle = titleField.getText().trim();
+            String author = authorField.getText().trim();
+
+            // Simple validation
+            if (!bookTitle.isEmpty() && !author.isEmpty()) {
+                // You can add the book to your collection here
+                System.out.println("Book added: " + bookTitle + " by " + author);
+                popWindow.dispose(); // Close the dialog
+            } else {
+                // styling the warning window
+                UIManager.put("OptionPane.messageFont", new Font("Arial", Font.ROMAN_BASELINE, 14));
+                UIManager.put("OptionPane.messageForeground", Color.RED);
+                JOptionPane.showMessageDialog(popWindow, "Please enter both title and author.", "Missing Information", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+        popWindow.setVisible(true);
+    }
     
     private static void setupSidebar() {
         // Create a sidebar panel
@@ -206,6 +345,10 @@ public class MyLibraryGUI
        //Command buttons
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between image and buttons
         addBookButton = new JButton("ADD BOOK");
+
+        // adding an event listener to the addBook button
+        addBookButton.addActionListener(e -> openAddBookWindow());
+
         addBooksButton = new JButton("ADD BOOKS");
 
         Dimension buttonSize = new Dimension(200, 40);
@@ -235,20 +378,6 @@ public class MyLibraryGUI
 
     private static void addBooksToPanel(JPanel booksPanel)
     {
-        
-        // // simulating of adding 15 books
-        // for (int i = 0; i < 15; i++)
-        // {
-        //     String authorName = "UKNOWN";
-        //     String titleName = "Hello World and Hello dear Programmer";
-        //     int rating = 5;
-
-        //     BookBox bookBox = new BookBox(titleName, authorName, rating);
-        //     booksPanel.add(bookBox);
-        //     booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
-        
-        // }
-
         // trying to work on the backend's connection to UI
         try
 		{
@@ -264,7 +393,7 @@ public class MyLibraryGUI
 				String bookName = dataSplit[0];
 				String authorName = dataSplit[1];
                 if (bookName.equals("Title"))
-                    System.out.println("NOT A GOOD IDEA");
+                    System.out.println("Skipping the first line...");
                 else
                 {
 

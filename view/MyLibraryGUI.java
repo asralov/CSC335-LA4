@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -80,7 +81,7 @@ public class MyLibraryGUI
         createHeader();
         // creating a sidebar
         setupSidebar();
-        // creating a body
+        // creating a body`
         setupBody();
         // makinf the close opereation to exit the program
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -432,6 +433,24 @@ public class MyLibraryGUI
         searchBar.setBackground(new Color(70, 70, 70));
         searchBar.setCaretColor(Color.WHITE);
         searchBar.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+// ---------- Sarch Bar Listener ----------
+        searchBar.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                warn();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                warn();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                warn();
+            }
+
+            public void warn() {
+                System.out.println("Changed! Text: " + searchBar.getText());
+            }
+        });
+
 
         searchPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         searchPanel.add(searchBar);

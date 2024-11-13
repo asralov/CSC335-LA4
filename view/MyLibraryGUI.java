@@ -24,10 +24,32 @@ public class MyLibraryGUI
     private JPanel searchPanel;
     private JTextField searchBar;
 
+    private  JPanel booksPanel;
     private MyLibraryGUIListeners listeners;
 
     private String[] books = {" Some Books "};
     
+
+    private MyLibraryGUI() {
+        listeners = new MyLibraryGUIListeners(new BooksCollections());
+        // creating a Java Frame
+        mainWindow = new JFrame("My Library");
+        // height and width
+        mainWindow.setSize(1250, 750);
+        // making the default location to be centered
+        mainWindow.setLocationRelativeTo(null);
+        // creating a header
+        createHeader();
+        // creating a sidebar
+        setupSidebar();
+        // creating a body`
+        setupBody();
+        // makinf the close opereation to exit the program
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // showing the window
+        mainWindow.setVisible(true);
+    }
+
 
     private static void styleButton(JButton button)
     {
@@ -74,45 +96,6 @@ public class MyLibraryGUI
     }
 
 
-    // private static void setUp()
-    // {
-    //     // creating a Java Frame
-    //     mainWindow = new JFrame("My Library");
-    //     // height and width
-    //     mainWindow.setSize(1250, 750);
-    //     // making the default location to be centered
-    //     mainWindow.setLocationRelativeTo(null);
-    //     // creating a header
-    //     createHeader();
-    //     // creating a sidebar
-    //     setupSidebar();
-    //     // creating a body`
-    //     setupBody();
-    //     // makinf the close opereation to exit the program
-    //     mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //     // showing the window
-    //     mainWindow.setVisible(true);
-    // }
-
-    private MyLibraryGUI() {
-        listeners = new MyLibraryGUIListeners(new BooksCollections());
-        // creating a Java Frame
-        mainWindow = new JFrame("My Library");
-        // height and width
-        mainWindow.setSize(1250, 750);
-        // making the default location to be centered
-        mainWindow.setLocationRelativeTo(null);
-        // creating a header
-        createHeader();
-        // creating a sidebar
-        setupSidebar();
-        // creating a body`
-        setupBody();
-        // makinf the close opereation to exit the program
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // showing the window
-        mainWindow.setVisible(true);
-    }
     private void createHeader() {
         mainWindow.setLayout(new BorderLayout());
         
@@ -310,12 +293,6 @@ public class MyLibraryGUI
         });
 
         // Star Rating field (using JComboBox)
-
-        // ratingComboBox.setPreferredSize(new Dimension(150, 30));
-        // ratingComboBox.setForeground(Color.WHITE);
-        // ratingComboBox.setBackground(new Color(70, 70, 70));
-        // ratingComboBox.setFont(new Font("Arial", Font.PLAIN, 14));
-        // Similar styling as optionBox can be applied here (optional)
         gbc.gridx = 1;
         gbc.gridy = 2;
         popWindow.add(ratingComboBox, gbc);
@@ -402,42 +379,6 @@ public class MyLibraryGUI
         mainWindow.add(sidebarPanel, BorderLayout.WEST);
     }
 
-    private void addBooksToPanel(JPanel booksPanel)
-    {
-        // trying to work on the backend's connection to UI
-        try
-		{
-			File obj = new File("books.txt");
-			Scanner reader = new Scanner(obj);
-			
-			while(reader.hasNextLine())
-			{
-				String data = reader.nextLine();
-				// split each line by ";" and add a Book object to 
-				// BookCollections
-				String[] dataSplit = data.split(";", 2);
-				String bookName = dataSplit[0];
-				String authorName = dataSplit[1];
-                if (bookName.equals("Title"))
-                    System.out.println("Skipping the first line...");
-                else
-                {
-
-                    BookBox bookBox = new BookBox(bookName, authorName, 5);
-                    booksPanel.add(bookBox);
-                    booksPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
-                }
-            }
-			reader.close();
-			//return true;
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("Oopsie, something went wrong, please make sure");
-			System.out.println("you enterted a valid file with .txt extenstion");
-			//return false; // returning false to indicate file is not valid
-		}
-    }
 
     private void setupBody() {
         // Create a panel for the body
@@ -463,7 +404,7 @@ public class MyLibraryGUI
         searchPanel.add(searchBar);
         bodyPanel.add(searchPanel, BorderLayout.NORTH);
 
-        JPanel booksPanel = new JPanel();
+        booksPanel = new JPanel(); // main inner pannel for showing books
         booksPanel.setBackground(new Color(45, 45, 45));
         booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
 
@@ -485,19 +426,20 @@ public class MyLibraryGUI
         });
     
 
-        if (books.length == 0)
-        {
-            booksPanel.setLayout(new BorderLayout());
-            JLabel noBooksText = new JLabel("Oopsie, no books in the database . . . ", SwingConstants.CENTER);
-            noBooksText.setFont(new Font("Arial", Font.PLAIN, 16)); // Optional: set font size
-            noBooksText.setForeground(Color.WHITE);
-            booksPanel.add(noBooksText, BorderLayout.CENTER);
-        }
+        // if (books.length == 0)
+        // {
+        //     booksPanel.setLayout(new BorderLayout());
+        //     JLabel noBooksText = new JLabel("Oopsie, no books in the database . . . ", SwingConstants.CENTER);
+        //     noBooksText.setFont(new Font("Arial", Font.PLAIN, 16)); // Optional: set font size
+        //     noBooksText.setForeground(Color.WHITE);
+        //     booksPanel.add(noBooksText, BorderLayout.CENTER);
+        // }
 
-        else 
-        {
-            addBooksToPanel(booksPanel);
-        }
+        // else 
+        // {
+        //     addBooksToPanel(booksPanel);
+        // }
+        listeners.updateBookPanel(booksPanel);
 
 
         // Add booksPanel to a scroll pane for scrolling

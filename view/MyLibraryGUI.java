@@ -23,12 +23,8 @@ public class MyLibraryGUI
     private JComboBox<String> optionBox;
     private JPanel searchPanel;
     private JTextField searchBar;
-
     private  JPanel booksPanel;
-    private MyLibraryGUIListeners listeners;
-
-    private String[] books = {" Some Books "};
-    
+    private MyLibraryGUIListeners listeners;   
 
     private MyLibraryGUI() {
         listeners = new MyLibraryGUIListeners(new BooksCollections());
@@ -328,6 +324,31 @@ public class MyLibraryGUI
 
         popWindow.setVisible(true);
     }
+
+    private void openFileChooser() {
+        File selectedFile;
+        // Create a file chooser
+        JFileChooser fileChooser = new JFileChooser();
+    
+        // Set file chooser properties, such as the dialog title
+        fileChooser.setDialogTitle("Select a file");
+    
+        // Show the file chooser dialog and capture the user response
+        int userSelection = fileChooser.showOpenDialog(null);
+    
+        // Check if the user selected a file (approved the selection)
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            // Get the selected file and store it in the variable
+            selectedFile = fileChooser.getSelectedFile();
+            listeners.addBooks(selectedFile, booksPanel);
+    
+            // Optional: Display a message or perform an action with the selected file
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("File selection cancelled by user.");
+        }
+        
+    }
     
     private void setupSidebar() {
         // Create a sidebar panel
@@ -353,6 +374,9 @@ public class MyLibraryGUI
         addBookButton.addActionListener(e -> openAddBookWindow());
 
         addBooksButton = new JButton("ADD BOOKS");
+
+        // adding an event listener to the addBooks button
+        addBooksButton.addActionListener(e -> openFileChooser());
 
         Dimension buttonSize = new Dimension(200, 40);
         addBookButton.setPreferredSize(buttonSize);

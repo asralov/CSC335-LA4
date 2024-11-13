@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -25,6 +26,12 @@ public class MyLibraryGUIListeners {
     public void UpdateSearch(String text, String filter, JPanel panel) {
         System.out.println(text + " " + filter + " " + panel );
         
+    }
+
+    public void addBooks(File file, JPanel bookPanel)
+    {
+        booksCol.appendCollection(file.getName());
+        this.updateBookPanel(bookPanel);
     }
 
 

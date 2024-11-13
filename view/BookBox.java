@@ -8,6 +8,8 @@ public class BookBox extends JPanel {
         // Set layout for BookBox panel
         setLayout(new BorderLayout(10, 10));
         setPreferredSize(new Dimension(650, 100)); // Adjust as necessary
+        setMaximumSize(new Dimension(650, 100));
+        setMinimumSize(new Dimension(650, 100));
         setBackground(new Color(50, 50, 50)); // Background color for the box
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 

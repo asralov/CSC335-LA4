@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -12,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import model.BooksCollections;
 import model.Book;
+import java.util.ArrayList;
 
 public class MyLibraryGUIListeners {
 
@@ -19,12 +21,18 @@ public class MyLibraryGUIListeners {
 
     public MyLibraryGUIListeners(BooksCollections booksCollections) {
         this.booksCol = booksCollections;
-        booksCollections.appendCollection("books2.txt");
+        booksCollections.appendCollection("books.txt");
     } 
 
-    public void UpdateSearch(String text, String filter, JPanel panel) {
-        System.out.println(text + " " + filter + " " + panel );
-        
+    public void UpdateSearch(String text, String filter, JPanel booksPanel) {
+        booksPanel.removeAll();
+        if (filter.equals("Author")) {
+            ArrayList<Book> searchBooks = booksCol.searchByAuthorBestMatch(text);
+            System.out.println(searchBooks.size());
+            AddToBookPanel(searchBooks, booksPanel);
+            booksPanel.revalidate();
+            booksPanel.repaint();
+        }
     }
 
 
@@ -39,7 +47,12 @@ public class MyLibraryGUIListeners {
             bookPanel.add(noBooksText, BorderLayout.CENTER);
             return;
         }
-        for (Book b: booksCol.getCopy())
+        AddToBookPanel(booksCol.getCopy(), bookPanel);
+    }
+
+    private void AddToBookPanel(ArrayList<Book> books, JPanel bookPanel) {
+        int bookCount = 0;
+        for (Book b: books)
         {
             String author  = b.getAuthor();
             String title = b.getTitle();
@@ -48,6 +61,8 @@ public class MyLibraryGUIListeners {
         
             bookPanel.add(bookBox);
             bookPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            bookCount++;
+            if (bookCount == 20) break;
         }
     }
 }

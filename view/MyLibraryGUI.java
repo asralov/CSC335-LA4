@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+
+import model.BooksCollections;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,13 +18,15 @@ public class MyLibraryGUI
     private static JFrame mainWindow;
 
     // command buttons
-    private static JButton addBookButton;
-    private static JButton addBooksButton;
-    private static JComboBox<String> optionBox;
-    private static JPanel searchPanel;
-    private static JTextField searchBar;
+    private JButton addBookButton;
+    private JButton addBooksButton;
+    private JComboBox<String> optionBox;
+    private JPanel searchPanel;
+    private JTextField searchBar;
 
-    private static String[] books = {" Some Books "};
+    private MyLibraryGUIListeners listeners;
+
+    private String[] books = {" Some Books "};
     
 
     private static void styleButton(JButton button)
@@ -69,8 +74,28 @@ public class MyLibraryGUI
     }
 
 
-    private static void setUp()
-    {
+    // private static void setUp()
+    // {
+    //     // creating a Java Frame
+    //     mainWindow = new JFrame("My Library");
+    //     // height and width
+    //     mainWindow.setSize(1250, 750);
+    //     // making the default location to be centered
+    //     mainWindow.setLocationRelativeTo(null);
+    //     // creating a header
+    //     createHeader();
+    //     // creating a sidebar
+    //     setupSidebar();
+    //     // creating a body`
+    //     setupBody();
+    //     // makinf the close opereation to exit the program
+    //     mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //     // showing the window
+    //     mainWindow.setVisible(true);
+    // }
+
+    private MyLibraryGUI() {
+        listeners = new MyLibraryGUIListeners(new BooksCollections());
         // creating a Java Frame
         mainWindow = new JFrame("My Library");
         // height and width
@@ -88,7 +113,7 @@ public class MyLibraryGUI
         // showing the window
         mainWindow.setVisible(true);
     }
-    private static void createHeader() {
+    private void createHeader() {
         mainWindow.setLayout(new BorderLayout());
         
         // Create a panel for the header with GridBagLayout
@@ -188,7 +213,7 @@ public class MyLibraryGUI
         mainWindow.add(headerPanel, BorderLayout.NORTH);
     }
 
-    private static void openAddBookWindow()
+    private void openAddBookWindow()
     {
         JDialog popWindow = new JDialog(mainWindow, "Add a New Book", true);
         popWindow.setSize(400, 250);
@@ -327,7 +352,7 @@ public class MyLibraryGUI
         popWindow.setVisible(true);
     }
     
-    private static void setupSidebar() {
+    private void setupSidebar() {
         // Create a sidebar panel
         JPanel sidebarPanel = new JPanel();
         sidebarPanel.setBackground(new Color(40, 40, 40)); // Darker gray for sidebar
@@ -377,7 +402,7 @@ public class MyLibraryGUI
         mainWindow.add(sidebarPanel, BorderLayout.WEST);
     }
 
-    private static void addBooksToPanel(JPanel booksPanel)
+    private void addBooksToPanel(JPanel booksPanel)
     {
         // trying to work on the backend's connection to UI
         try
@@ -414,7 +439,7 @@ public class MyLibraryGUI
 		}
     }
 
-    private static void setupBody() {
+    private void setupBody() {
         // Create a panel for the body
         JPanel bodyPanel = new JPanel();
         bodyPanel.setBackground(new Color(45, 45, 45)); // Darker background for the body
@@ -434,24 +459,6 @@ public class MyLibraryGUI
         searchBar.setCaretColor(Color.WHITE);
         searchBar.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-// ---------- Sarch Bar Listener ----------
-        searchBar.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                warn();
-            }
-            public void removeUpdate(DocumentEvent e) {
-                warn();
-            }
-            public void insertUpdate(DocumentEvent e) {
-                warn();
-            }
-
-            public void warn() {
-                System.out.println("Changed! Text: " + searchBar.getText());
-            }
-        });
-
-
         searchPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         searchPanel.add(searchBar);
         bodyPanel.add(searchPanel, BorderLayout.NORTH);
@@ -459,6 +466,23 @@ public class MyLibraryGUI
         JPanel booksPanel = new JPanel();
         booksPanel.setBackground(new Color(45, 45, 45));
         booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
+
+        // ---------- Sarch Bar Listener ----------
+        searchBar.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                Update();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                Update();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                Update();
+            }
+
+            public void Update() {
+                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
+            }
+        });
     
 
         if (books.length == 0)
@@ -491,6 +515,6 @@ public class MyLibraryGUI
 
     public static void main(String[] args)
     {
-        setUp();
+        new MyLibraryGUI();
     }
 }

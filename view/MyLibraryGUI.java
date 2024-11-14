@@ -1,5 +1,6 @@
 package view;
 
+// AUTHOR:M ABRORJON ASRALOV, PU TSOY
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;

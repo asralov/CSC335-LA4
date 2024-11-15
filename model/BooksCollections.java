@@ -216,6 +216,14 @@
 		 Collections.sort(listToReturn, new CompareByAuthor());
 		 return listToReturn;
 	 }
+
+	 public void FilterByAuthor() {
+		this.books = getBooksByAuthor();
+	 }
+
+	 public void FilterByTitle() {
+		this.books = getBooksByTitle();
+	 }
  
 	 /*
 	  * getCopy() -- returns the copy of the array list of Book objects,

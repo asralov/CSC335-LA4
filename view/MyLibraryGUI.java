@@ -1,5 +1,6 @@
 package view;
 
+// AUTHOR:M ABRORJON ASRALOV, PU TSOY
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -12,12 +13,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+
 
 public class MyLibraryGUI 
 {
-    private static JFrame mainWindow;
+    public static JFrame mainWindow;
 
     // command buttons
     private JButton addBookButton;
@@ -49,7 +49,7 @@ public class MyLibraryGUI
     }
 
 
-    private static void styleButton(JButton button)
+    public static void styleButton(JButton button)
     {
         Color defaultColor = new Color(0,0,0);
         button.setOpaque(true);

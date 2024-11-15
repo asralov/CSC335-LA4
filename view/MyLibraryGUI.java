@@ -7,6 +7,8 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.BooksCollections;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -135,6 +137,11 @@ public class MyLibraryGUI
 
         String[] options = {"Author", "Title"};
         optionBox = new JComboBox<>(options);
+        optionBox.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+            listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
+           } 
+        });
         // Basic styling
         optionBox.setPreferredSize(new Dimension(150, 25));
         optionBox.setForeground(Color.WHITE);     // Set text color
@@ -174,8 +181,6 @@ public class MyLibraryGUI
                 return arrowButton;
             }
         });
-
-
 
         filterPanel.add(filteredByText);
         filterPanel.add(optionBox);

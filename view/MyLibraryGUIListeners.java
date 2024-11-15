@@ -28,12 +28,21 @@ public class MyLibraryGUIListeners {
     public void UpdateSearch(String text, String filter, JPanel booksPanel) {
         booksPanel.removeAll();
         if (filter.equals("Author")) {
+            booksCol.FilterByAuthor();
             ArrayList<Book> searchBooks = booksCol.searchByAuthorBestMatch(text);
-            System.out.println(searchBooks.size());
             AddToBookPanel(searchBooks, booksPanel);
-            booksPanel.revalidate();
-            booksPanel.repaint();
+            // search by title too, adds books by title after books by author name
+            searchBooks = booksCol.searchByTitleBestMatch(text);
+            AddToBookPanel(searchBooks, booksPanel);
+        } else if (filter.equals("Title")) {
+            booksCol.FilterByTitle();
+            ArrayList<Book> searchBooks = booksCol.searchByTitleBestMatch(text);
+            AddToBookPanel(searchBooks, booksPanel);
+            searchBooks = booksCol.searchByAuthorBestMatch(text);
+            AddToBookPanel(searchBooks, booksPanel);
         }
+        booksPanel.revalidate();
+        booksPanel.repaint();
     }
 
     public void addBooks(File file, JPanel bookPanel)

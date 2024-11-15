@@ -120,6 +120,7 @@ public class MyLibraryGUIListeners {
         Book newBook = new Book(title, author);
         newBook.updateRating(rating);
         booksCol.add(newBook);
+        updateBookPanel(booksPanel);
         RefreshBookList(booksPanel);
     }
 

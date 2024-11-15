@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.io.File;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ public class MyLibraryGUIListeners {
 
     public MyLibraryGUIListeners(BooksCollections booksCollections) {
         this.booksCol = booksCollections;
-        booksCollections.appendCollection("books.txt");
+        //booksCollections.appendCollection("books.txt");
     } 
 
     public void UpdateSearch(String text, String filter, JPanel booksPanel) {
@@ -65,6 +66,12 @@ public class MyLibraryGUIListeners {
             noBooksText.setForeground(Color.WHITE);
             bookPanel.add(noBooksText, BorderLayout.CENTER);
             return;
+        } else {
+            System.out.println("yes");
+            bookPanel.removeAll();
+            //bookPanel = new JPanel(); // main inner pannel for showing books
+            bookPanel.setBackground(new Color(45, 45, 45));
+            bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
         }
         AddToBookPanel(booksCol.getCopy(), bookPanel);
     }
@@ -77,7 +84,6 @@ public class MyLibraryGUIListeners {
             String title = b.getTitle();
             int rating = b.getRating();
             BookBox bookBox = new BookBox(title, author, rating);
-            System.out.println("here");
             bookPanel.add(bookBox);
             bookPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             bookCount++;

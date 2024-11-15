@@ -139,7 +139,7 @@ public class MyLibraryGUI
         optionBox = new JComboBox<>(options);
         optionBox.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-            listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
+                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
            } 
         });
         // Basic styling
@@ -318,6 +318,7 @@ public class MyLibraryGUI
             if (!bookTitle.isEmpty() && !author.isEmpty()) {
                 // You can add the book to your collection here
                 System.out.println("Book added: " + bookTitle + " by " + author);
+                listeners.AddSingleBook(bookTitle, author, ratingComboBox.getSelectedIndex()+1, booksPanel);
                 popWindow.dispose(); // Close the dialog
             } else {
                 // styling the warning window
@@ -328,31 +329,6 @@ public class MyLibraryGUI
         });
 
         popWindow.setVisible(true);
-    }
-
-    private void openFileChooser() {
-        File selectedFile;
-        // Create a file chooser
-        JFileChooser fileChooser = new JFileChooser();
-    
-        // Set file chooser properties, such as the dialog title
-        fileChooser.setDialogTitle("Select a file");
-    
-        // Show the file chooser dialog and capture the user response
-        int userSelection = fileChooser.showOpenDialog(null);
-    
-        // Check if the user selected a file (approved the selection)
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            // Get the selected file and store it in the variable
-            selectedFile = fileChooser.getSelectedFile();
-            listeners.addBooks(selectedFile, booksPanel);
-    
-            // Optional: Display a message or perform an action with the selected file
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        } else {
-            System.out.println("File selection cancelled by user.");
-        }
-        
     }
     
     private void setupSidebar() {
@@ -381,7 +357,7 @@ public class MyLibraryGUI
         addBooksButton = new JButton("ADD BOOKS");
 
         // adding an event listener to the addBooks button
-        addBooksButton.addActionListener(e -> openFileChooser());
+        addBooksButton.addActionListener(e -> listeners.openFileChooser(booksPanel));
 
         Dimension buttonSize = new Dimension(200, 40);
         addBookButton.setPreferredSize(buttonSize);

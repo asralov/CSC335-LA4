@@ -106,17 +106,18 @@ class TestingBooksCollectionsAndBooks {
      */
     @Test
     public void testGetRandomBook_NotEmpty() {
+    	BooksCollections bc = new BooksCollections();
         Book book1 = new Book("Book 1", "Author 1", 3);
         Book book2 = new Book("Book 2", "Author 2", 3);
         Book book3 = new Book("Book 3", "Author 3", 3);
-        bookCollection.add(book1);
-        bookCollection.add(book2);
-        bookCollection.add(book3);
+        bc.add(book1);
+        bc.add(book2);
+        bc.add(book3);
         // since getRandomBook returns a random unread book, this
         // test should return book1 if we set book2 and book3 to read
         book2.read();
         book3.read();
-        Book randomBook = bookCollection.getRandomBook();
+        Book randomBook = bc.getRandomBook();
         assertEquals(book1, randomBook); 
     }
 

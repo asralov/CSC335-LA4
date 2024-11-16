@@ -126,7 +126,10 @@
 		 if (unreadBooks.isEmpty()) {
 			 return null;  // Or throw an exception depending on your needs
 		 }
-		 
+		 if (unreadBooks.size() == 1)
+		 {
+			 return unreadBooks.get(0);
+		 }
 		 // Create a random number generator
 		 Random random = new Random();
 		 

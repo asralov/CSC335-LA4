@@ -21,7 +21,7 @@ public class MyLibraryGUI
 {
     // making it pubic static so we could reuse it
     // in other class as well
-    public static JFrame mainWindow; 
+    public static JFrame mainWindow;  
 
     // storing the command buttons with option box
     // and panel so we can reuse them in other parts

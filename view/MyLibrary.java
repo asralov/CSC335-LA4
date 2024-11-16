@@ -17,7 +17,7 @@ import model.*;
 public class MyLibrary
 {
 	private static Scanner sc;
-	
+	 
     public static void main(String[] args)
     {
     	// writing a welcome message
@@ -71,7 +71,7 @@ public class MyLibrary
     	        }
     		}	
 			// if command does not exist, we print a message to the user to try again with valid command
-    		if (cmdList.get(userInput) == null)
+    		else if (cmdList.get(userInput) == null)
     		{
     			System.out.print("Oopsie, it seems you entered an invalid or incorrectly spelled\ncommand,");
     			System.out.println(" please go over the list of commands and try again!");

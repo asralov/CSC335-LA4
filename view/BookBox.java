@@ -10,7 +10,7 @@ package view;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
-
+ 
 public class BookBox extends JPanel {
     private JButton rateButton;
     private MyLibraryGUIListeners listeners;
@@ -18,7 +18,7 @@ public class BookBox extends JPanel {
     public BookBox(String title, String author, int rating, MyLibraryGUIListeners myLibraryGUIListeners) {
         this.listeners = myLibraryGUIListeners;
         this.title = title;
-        // starting setting the layout for boxes
+        // starting setting the layout for boxes 
         setLayout(new BorderLayout(10, 10));
         setPreferredSize(new Dimension(650, 100)); 
         setMaximumSize(new Dimension(650, 100));

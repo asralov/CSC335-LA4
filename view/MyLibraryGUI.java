@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 
 
 public class MyLibraryGUI 
@@ -25,11 +24,11 @@ public class MyLibraryGUI
     private JComboBox<String> optionBox;
     private JPanel searchPanel;
     private JTextField searchBar;
-    private  JPanel booksPanel;
+    private  JPanel booksPanel = new JPanel();
     private MyLibraryGUIListeners listeners;   
 
     private MyLibraryGUI() {
-        listeners = new MyLibraryGUIListeners(new BooksCollections());
+        listeners = new MyLibraryGUIListeners(new BooksCollections(), booksPanel);
         // creating a Java Frame
         mainWindow = new JFrame("My Library");
         // height and width
@@ -139,7 +138,7 @@ public class MyLibraryGUI
         optionBox = new JComboBox<>(options);
         optionBox.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
+                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString());
            } 
         });
         // Basic styling
@@ -318,7 +317,7 @@ public class MyLibraryGUI
             if (!bookTitle.isEmpty() && !author.isEmpty()) {
                 // You can add the book to your collection here
                 System.out.println("Book added: " + bookTitle + " by " + author);
-                listeners.AddSingleBook(bookTitle, author, ratingComboBox.getSelectedIndex()+1, booksPanel);
+                listeners.AddSingleBook(bookTitle, author, ratingComboBox.getSelectedIndex()+1);
                 popWindow.dispose(); // Close the dialog
             } else {
                 // styling the warning window
@@ -357,7 +356,7 @@ public class MyLibraryGUI
         addBooksButton = new JButton("ADD BOOKS");
 
         // adding an event listener to the addBooks button
-        addBooksButton.addActionListener(e -> listeners.openFileChooser(booksPanel));
+        addBooksButton.addActionListener(e -> listeners.OpenFileChooser());
 
         Dimension buttonSize = new Dimension(200, 40);
         addBookButton.setPreferredSize(buttonSize);
@@ -409,7 +408,7 @@ public class MyLibraryGUI
         searchPanel.add(searchBar);
         bodyPanel.add(searchPanel, BorderLayout.NORTH);
 
-        booksPanel = new JPanel(); // main inner pannel for showing books
+        //booksPanel = new JPanel(); // main inner pannel for showing books
         booksPanel.setBackground(new Color(45, 45, 45));
         booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
 
@@ -426,7 +425,7 @@ public class MyLibraryGUI
             }
 
             public void Update() {
-                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString(), booksPanel);
+                listeners.UpdateSearch(searchBar.getText(), optionBox.getSelectedItem().toString());
             }
         });
     
@@ -444,7 +443,7 @@ public class MyLibraryGUI
         // {
         //     addBooksToPanel(booksPanel);
         // }
-        listeners.updateBookPanel(booksPanel);
+        listeners.RefreshView();
 
 
         // Add booksPanel to a scroll pane for scrolling

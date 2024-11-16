@@ -17,7 +17,8 @@
  import java.io.FileNotFoundException;
  import java.util.ArrayList;
  import java.util.Collections;
- import java.util.List;
+import java.util.HashSet;
+import java.util.List;
  import java.util.Random;
  import java.util.Scanner;
  
@@ -45,6 +46,11 @@
 		 return fitDesc;
 	 }
  
+	 /*
+	  * searchByAuthorBestMatch(String authorBestMatch) -- searches through the ArrayList
+	  * of Book objects and returns a new ArrayList where all books start with
+	  * authorBestMatch
+	  */
 	 public ArrayList<Book> searchByAuthorBestMatch(String authorBestMatch) {
 		 ArrayList<Book> fitDesc = new ArrayList<>();
 		 for (int i = 0; i < books.size(); i++) {
@@ -52,6 +58,7 @@
 				 fitDesc.add(books.get(i));
 			 }
 		 } 
+		 
 		 return fitDesc;
 	 }
 	 
@@ -71,6 +78,11 @@
 		 return fitDesc;
 	 }
  
+	 /*
+	  * searchByTitleBestMatch(String titleBestMatch) -- searches through the ArrayList
+	  * of Book objects and returns a new ArrayList where all books start with
+	  * titleBestMatch
+	  */
 	 public ArrayList<Book> searchByTitleBestMatch(String titleBestMatch) {
 		 ArrayList<Book> fitDesc = new ArrayList<>();
 		 for (int i = 0; i < books.size(); i++) {
@@ -217,10 +229,16 @@
 		 return listToReturn;
 	 }
 
+	 /*
+	  * FilterByAuthor() -- calls getBooksByAuthor on the current books
+	  */
 	 public void FilterByAuthor() {
 		this.books = getBooksByAuthor();
 	 }
 
+	 /*
+	  * FilterByTitle() -- calls getBooksByTitle on the current books
+	  */
 	 public void FilterByTitle() {
 		this.books = getBooksByTitle();
 	 }

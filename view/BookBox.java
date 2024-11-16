@@ -7,7 +7,11 @@ import java.awt.*;
 
 public class BookBox extends JPanel {
     private JButton rateButton;
-    public BookBox(String title, String author, int rating) {
+    private MyLibraryGUIListeners listeners;
+    private String title;
+    public BookBox(String title, String author, int rating, MyLibraryGUIListeners myLibraryGUIListeners) {
+        this.listeners = myLibraryGUIListeners;
+        this.title = title;
         // Set layout for BookBox panel
         setLayout(new BorderLayout(10, 10));
         setPreferredSize(new Dimension(650, 100)); // Adjust as necessary
@@ -141,6 +145,7 @@ public class BookBox extends JPanel {
         // Add action listener to the button if needed
         rateButton.addActionListener(e -> {
             String selectedRating = (String) ratingComboBox.getSelectedItem();
+            listeners.UpdateRating(title, Integer.parseInt(ratingComboBox.getSelectedItem().toString()));
             System.out.println("Rating selected: " + selectedRating);
             popWindow.dispose(); // Close the dialog after rating is selected
         });

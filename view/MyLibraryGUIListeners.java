@@ -1,131 +1,166 @@
+/*
+ * File: MyLibraryGUIListeners.java
+ * Authors: Pulat Uralov & Abror Asralov
+ * Purpose: This is the controller component of MyLibraryGUI,
+ * transfers data from BooksCollections to MyLibraryGUI
+ * and from MyLibraryGUI to BooksCollections
+ */
+
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.io.File;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
+import java.util.ArrayList;
+import java.util.HashSet;
+import javax.swing.*;
 import model.BooksCollections;
 import model.Book;
-import java.util.ArrayList;
 
 public class MyLibraryGUIListeners {
 
     private BooksCollections booksCol;
+    private JPanel booksPanel;
+    private String currentSearchText;
+    private String currentFilter;
 
-    public MyLibraryGUIListeners(BooksCollections booksCollections) {
-        this.booksCol = booksCollections;
-        //booksCollections.appendCollection("books.txt");
-    } 
-
-    public void UpdateSearch(String text, String filter, JPanel booksPanel) {
-        booksPanel.removeAll();
-        if (filter.equals("Author")) {
-            booksCol.FilterByAuthor();
-            ArrayList<Book> searchBooks = booksCol.searchByAuthorBestMatch(text);
-            System.out.println("Search book size: " + searchBooks.size());
-            AddToBookPanel(searchBooks, booksPanel);
-            // search by title too, adds books by title after books by author name
-            searchBooks = booksCol.searchByTitleBestMatch(text);
-            AddToBookPanel(searchBooks, booksPanel);
-        } else if (filter.equals("Title")) {
-            booksCol.FilterByTitle();
-            ArrayList<Book> searchBooks = booksCol.searchByTitleBestMatch(text);
-            AddToBookPanel(searchBooks, booksPanel);
-            searchBooks = booksCol.searchByAuthorBestMatch(text);
-            AddToBookPanel(searchBooks, booksPanel);
-        }
-        RefreshBookList(booksPanel);
+    /**
+     * @param booksCol - instance of BooksCollections class
+     * @param booksPanel - JPanel that displayes the list of books
+     */
+    public MyLibraryGUIListeners(BooksCollections booksCol, JPanel booksPanel) {
+        this.booksCol = booksCol;
+        this.booksPanel = booksPanel;
     }
 
-    public void addBooks(File file, JPanel bookPanel)
-    {
-        booksCol.appendCollection(file.getName());
-        updateBookPanel(bookPanel);
-        RefreshBookList(bookPanel);
+    /**
+     * UpdateSearch -- is called every time the search bar is changed. Updates
+     * currentSearchText and currentFilter, and calls PerformSearch
+     * @param searchText - current text that's in the search bar
+     * @param filter - current filter selected
+     */
+    public void UpdateSearch(String searchText, String filter) {
+        this.currentSearchText = searchText;
+        this.currentFilter = filter;
+        PerformSearch();
     }
 
-
-    public void updateBookPanel(JPanel bookPanel)
-    {
-        System.out.println(booksCol.getCopy().size());
-        if (booksCol.getCopy().size() == 0)
-        {
-            bookPanel.setLayout(new BorderLayout());
-            JLabel noBooksText = new JLabel("Oopsie, no books in the database . . . ", SwingConstants.CENTER);
-            noBooksText.setFont(new Font("Arial", Font.PLAIN, 16)); // Optional: set font size
-            noBooksText.setForeground(Color.WHITE);
-            bookPanel.add(noBooksText, BorderLayout.CENTER);
+    /**
+     * PerformSearch -- find books using the current search text and filter
+     * and adds them to the panel
+     */
+    private void PerformSearch() {
+        // if search is empty then call RefreshView and return
+        if (currentSearchText == null) {
+            RefreshView();
             return;
-        } else {
-            System.out.println("yes");
-            bookPanel.removeAll();
-            //bookPanel = new JPanel(); // main inner pannel for showing books
-            bookPanel.setBackground(new Color(45, 45, 45));
-            bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
         }
-        AddToBookPanel(booksCol.getCopy(), bookPanel);
+        booksPanel.removeAll();
+
+        ArrayList<Book> searchResults = new ArrayList<>();
+        if (currentFilter.equals("Author")) {
+                booksCol.FilterByAuthor();
+                searchResults = booksCol.searchByAuthorBestMatch(currentSearchText);
+        }
+        else if (currentFilter.equals("Title")) {
+                booksCol.FilterByTitle();
+                searchResults = booksCol.searchByTitleBestMatch(currentSearchText);
+        }
+
+        PopulateBooksPanel(searchResults);
+        RefreshBooksPanel();
     }
 
-    private void AddToBookPanel(ArrayList<Book> books, JPanel bookPanel) {
-        int bookCount = 0;
-        for (Book b: books)
-        {
-            String author  = b.getAuthor();
-            String title = b.getTitle();
-            int rating = b.getRating();
-            BookBox bookBox = new BookBox(title, author, rating);
-            bookPanel.add(bookBox);
-            bookPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-            bookCount++;
-            if (bookCount == 20) break;
-        }
-    }
-
-    public void openFileChooser(JPanel booksPanel) {
-        File selectedFile;
-        // Create a file chooser
-        JFileChooser fileChooser = new JFileChooser();
-    
-        // Set file chooser properties, such as the dialog title
-        fileChooser.setDialogTitle("Select a file");
-    
-        // Show the file chooser dialog and capture the user response
-        int userSelection = fileChooser.showOpenDialog(null);
-    
-        // Check if the user selected a file (approved the selection)
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            // Get the selected file and store it in the variable
-            selectedFile = fileChooser.getSelectedFile();
-            addBooks(selectedFile, booksPanel);
-    
-            // Optional: Display a message or perform an action with the selected file
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        } else {
-            System.out.println("File selection cancelled by user.");
-        }
-    }
-
-    public void AddSingleBook(String title, String author, int rating, JPanel booksPanel) {
-        System.out.println(title + " " + rating + " " + author);
+    /**
+     * AddSingleBook -- adds one book to booksCol
+     * @param title - title of the new book
+     * @param author - author of the new book
+     * @param rating - rating of the new book
+     */
+    public void AddSingleBook(String title, String author, int rating) {
         Book newBook = new Book(title, author);
         newBook.updateRating(rating);
         booksCol.add(newBook);
-        updateBookPanel(booksPanel);
-        RefreshBookList(booksPanel);
+        RefreshView();
     }
 
-    private void RefreshBookList(JPanel booksPanel) {
+    /**
+     * UpdateRating -- updates the rating of a book
+     * @param title - title of the book to update
+     * @param rating - new rating
+     */
+    public void UpdateRating(String title, int rating) {
+        Book bookToUpdate = booksCol.searchByTitle(title).stream().findFirst().orElse(null);
+        if (bookToUpdate != null) {
+            bookToUpdate.updateRating(rating);
+            PerformSearch();
+        }
+    }
+
+    /**
+     * RefreshView -- if no books present, call ShowNoBooksMessage,
+     * otherwise call PopulateBooksPanel. Call RefreshBooksPanel
+     */
+    public void RefreshView() {
+        if (booksCol.getCopy().isEmpty()) {
+            ShowNoBooksMessage();
+        } else {
+            PopulateBooksPanel(booksCol.getCopy());
+        }
+        RefreshBooksPanel();
+    }
+
+    /**
+     * PopulateBooksPanel -- adds books boxes to the panel. Only shows
+     * 20 or fewer books at a time to increase performance
+     * @param books
+     */
+    private void PopulateBooksPanel(ArrayList<Book> books) {
+        books = new ArrayList<>(new HashSet<>(books)); // Remove duplicates
+        booksPanel.removeAll();
+        booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
+
+        for (int i = 0; i < Math.min(books.size(), 20); i++) {
+            Book book = books.get(i);
+            BookBox bookBox = new BookBox(book.getTitle(), book.getAuthor(), book.getRating(), this);
+            booksPanel.add(bookBox);
+            booksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        }
+    }
+
+    /**
+     * ShowNoBooksMessage -- shows a message in the middle of the panel in case there 
+     * are no books present in booksCol
+     */
+    private void ShowNoBooksMessage() {
+        booksPanel.setLayout(new BorderLayout());
+        JLabel noBooksLabel = new JLabel("No books in the database.", SwingConstants.CENTER);
+        noBooksLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        noBooksLabel.setForeground(Color.WHITE);
+        booksPanel.add(noBooksLabel, BorderLayout.CENTER);
+    }
+
+    /**
+     * OpenFileChooser -- appends a collection of books to booksCol
+     */
+    public void OpenFileChooser() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select a File");
+
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            booksCol.appendCollection(selectedFile.getName());
+            RefreshView();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        } else {
+            System.out.println("File selection canceled.");
+        }
+    }
+
+    /**
+     * RefreshBooksPanel -- refreshed booksPanel with current elements 
+     */
+    private void RefreshBooksPanel() {
         booksPanel.revalidate();
         booksPanel.repaint();
     }
 }
-

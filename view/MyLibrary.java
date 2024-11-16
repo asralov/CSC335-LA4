@@ -1,3 +1,4 @@
+package view;
 /*
  * File: MyLibrary.java
  * Authors: Abrorjon Asralov, Pulat Uralov
@@ -11,6 +12,8 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import controller.Librarian;
 import model.*;
 public class MyLibrary
 {

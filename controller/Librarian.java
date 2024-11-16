@@ -1,10 +1,11 @@
+package controller;
 /**
  * File: Librarian.java
  * Author: Abrorjon Asralov, Pulat Uralov
  * Username: asralov, uralovpulya
  * 
  * Purpose: This is a vital class where all controlling and 
- * brain related part is hapenning. It makes sense to call
+ * brain related part is hapenning. It makes sense to callgi
  * it librarian because all job is done by this file which
  * takes care of passing things around and handling messages
  * for user interface. Encapsulation is done by not letting

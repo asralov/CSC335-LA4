@@ -1,3 +1,9 @@
+/**
+ * File: TestingBooksCollectionsAndBooks.java
+ * Author: Pulat Uralov & Abror Asralov
+ * Purpose: tests BooksCollections.java and Book.java and covers
+ * all possible test cases for them
+ */
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +25,13 @@ class TestingBooksCollectionsAndBooks {
         assertEquals(1, bookCollection.getCopy().size());
     }
     
+    /*
+     * 
+     *      TESTING BOOKSOLLECTION SEARCHING METHODS
+     * testing involves adding a few books to the collection
+     * and trying to search for a book using different searching methods
+     * 
+     */
     @Test
     public void testSearchByAuthor() {
         Book book1 = new Book("The Lord of the Rings", "J.R.R. Tolkien", 5);
@@ -87,14 +100,25 @@ class TestingBooksCollectionsAndBooks {
         assertTrue(result.contains(book1));
     }
 
+    /*
+     * TESTING RANDOM BOOK METHOD
+     * testing getRandomBook  
+     */
     @Test
     public void testGetRandomBook_NotEmpty() {
         Book book1 = new Book("Book 1", "Author 1", 3);
+        Book book2 = new Book("Book 2", "Author 2", 3);
+        Book book3 = new Book("Book 3", "Author 3", 3);
         bookCollection.add(book1);
+        bookCollection.add(book2);
+        bookCollection.add(book3);
+        // since getRandomBook returns a random unread book, this
+        // test should return book1 if we set book2 and book3 to read
+        book2.read();
+        book3.read();
         Book randomBook = bookCollection.getRandomBook();
-        assertEquals(book1, randomBook); //or assertTrue(randomBook != null)  depending on your needs.
+        assertEquals(book1, randomBook); 
     }
-
 
     @Test
     public void testGetRandomBook_Empty() {
@@ -102,6 +126,9 @@ class TestingBooksCollectionsAndBooks {
         assertNull(randomBook);
     }
 
+    /*
+     * TESTING APPENDING THE COLLECTION
+     */
     @Test
     public void testAppendCollection_Success() {
         assertTrue(bookCollection.appendCollection("./books.txt"));
@@ -114,6 +141,9 @@ class TestingBooksCollectionsAndBooks {
         assertFalse(bookCollection.appendCollection("nonexistent.txt"));
     }
     
+    /*
+     * FOR 100% COVERAGE
+     */
     @Test
     public void testToString() {
     	Book book1 = new Book("Book1", "AuthorC", 3);
@@ -126,6 +156,9 @@ class TestingBooksCollectionsAndBooks {
         System.out.println(book1);
     }
 
+    /**
+     * TESTING GET BOOKS METHODS
+     */
     @Test
     public void testGetBooksByAuthor() {
         Book book1 = new Book("Book1", "AuthorC", 3);
@@ -197,6 +230,9 @@ class TestingBooksCollectionsAndBooks {
         assertTrue(unreadBooks.contains(book3));
     }
 
+    /*
+     * TESTING FILTERING METHODS
+     */
     @Test
     public void testFilterByAuthor(){
         Book book1 = new Book("Book1", "AuthorC", 3);
@@ -226,6 +262,10 @@ class TestingBooksCollectionsAndBooks {
             assertEquals(titles.get(i), bookCollection.getCopy().get(i).getTitle());
         }
     }
+    
+    /*
+     * TESTING SETING RATING METHOD IN BOOKS
+     */
     @Test
     public void testBooksRatings() {
     	Book book1 = new Book("BookA", "AuthorA", -20);

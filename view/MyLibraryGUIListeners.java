@@ -6,16 +6,14 @@
  * and from MyLibraryGUI to BooksCollections
  */
 
-package controller;
+package view;
 
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.*;
-import model.BooksCollections;
-import view.BookBox;
-import model.Book;
+import model.*;
 
 public class MyLibraryGUIListeners {
 

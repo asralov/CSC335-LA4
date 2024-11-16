@@ -1,4 +1,4 @@
-package controller;
+package view;
 /**
  * File: Librarian.java
  * Author: Abrorjon Asralov, Pulat Uralov
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import model.*;
+import model.*;;
 
 public class Librarian 
 {

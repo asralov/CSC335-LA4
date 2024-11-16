@@ -12,7 +12,7 @@ package view;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import model.*;;
+import model.*;
 
 public class MyLibrary
 {

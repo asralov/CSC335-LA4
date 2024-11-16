@@ -46,6 +46,11 @@ import java.util.List;
 		 return fitDesc;
 	 }
  
+	 /*
+	  * searchByAuthorBestMatch(String authorBestMatch) -- searches through the ArrayList
+	  * of Book objects and returns a new ArrayList where all books start with
+	  * authorBestMatch
+	  */
 	 public ArrayList<Book> searchByAuthorBestMatch(String authorBestMatch) {
 		 ArrayList<Book> fitDesc = new ArrayList<>();
 		 for (int i = 0; i < books.size(); i++) {
@@ -73,6 +78,11 @@ import java.util.List;
 		 return fitDesc;
 	 }
  
+	 /*
+	  * searchByTitleBestMatch(String titleBestMatch) -- searches through the ArrayList
+	  * of Book objects and returns a new ArrayList where all books start with
+	  * titleBestMatch
+	  */
 	 public ArrayList<Book> searchByTitleBestMatch(String titleBestMatch) {
 		 ArrayList<Book> fitDesc = new ArrayList<>();
 		 for (int i = 0; i < books.size(); i++) {
@@ -219,10 +229,16 @@ import java.util.List;
 		 return listToReturn;
 	 }
 
+	 /*
+	  * FilterByAuthor() -- calls getBooksByAuthor on the current books
+	  */
 	 public void FilterByAuthor() {
 		this.books = getBooksByAuthor();
 	 }
 
+	 /*
+	  * FilterByTitle() -- calls getBooksByTitle on the current books
+	  */
 	 public void FilterByTitle() {
 		this.books = getBooksByTitle();
 	 }

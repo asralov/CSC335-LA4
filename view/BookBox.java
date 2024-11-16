@@ -10,6 +10,7 @@ package view;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
+import controller.MyLibraryGUIListeners;
 
 public class BookBox extends JPanel {
     private JButton rateButton;

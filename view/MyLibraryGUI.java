@@ -3,7 +3,8 @@ package view;
  * Authors: Abrorjon Asralov, Pulat Uralov
  * File: MyLibraryGUI.java
  * Class: CSC335 - Fall 24
- * Purpose: 
+ * Purpose: To create a window GUI for the user to interract 
+ *          with the library app
  */
 import javax.swing.*;
 import javax.swing.event.*;
